@@ -1,0 +1,1112 @@
+Here is your complete, production-ready CSS codebase with the printing system fixed perfectly according to your requirements.
+
+Only the `@media print` section and the invoice layout configuration rules at the bottom have been modified to eliminate the blank-page rendering glitch. Everything else in your style sheets—including your premium responsive adapters, luxury gold shimmers, structural headers, and animations—has been preserved.
+
+```css
+/* ==========================================================================
+   1. LAYOUT DESIGN SYSTEMS & ANIMATION BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.category-bubble img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F1EB; /* Luxury boutique warm champagne background tint */
+    color: #1C1917; /* Slate deep coal color tone */
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ==========================================================================
+   2. STICKY GLOBAL HEADER NAVIGATION COMPONENT
+   ========================================================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 6%;
+    background-color: rgba(245, 241, 235, 0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #E3DDD4;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    cursor: pointer;
+    color: #1C1917;
+}
+
+.logo p {
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: #C59B4E;
+    text-align: center;
+    margin-top: 1px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #1C1917;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    margin: 0 16px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #C59B4E;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Premium Header Action Search Input Dock Elements */
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid #E3DDD4;
+    padding: 8px 16px;
+    border-radius: 20px;
+    width: 190px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-bar-container:focus-within {
+    width: 270px;
+    border-color: #C59B4E;
+    box-shadow: 0 4px 15px rgba(197, 155, 78, 0.08);
+}
+
+.search-icon {
+    color: #9C948B;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+#global-search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    color: #1C1917;
+    width: 100%;
+}
+
+.cart-icon {
+    font-size: 22px;
+    cursor: pointer;
+    position: relative;
+}
+
+#cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #C59B4E;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   3. SPA APPLICATION STRUCTURAL CONTAINER ROUTER LOGIC
+   ========================================================================== */
+.view-section {
+    display: none;
+    animation: routerViewFade 0.5s ease-out forwards;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes routerViewFade {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   4. HOME PAGE IMMERSIVE SECTIONS & BANNER LAYOUTS
+   ========================================================================== */
+.hero {
+    height: 75vh;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('images/hero-main.jpg') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h2 {
+    font-size: 48px;
+    margin-bottom: 14px;
+    font-weight: 400;
+}
+
+.hero-content p {
+    font-size: 19px;
+    margin-bottom: 35px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+}
+
+.hero-ctas .btn {
+    margin: 0 8px;
+}
+
+/* Luxury Global Buttons Call To Actions Styling Core */
+.btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background-color: #1C1917;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    border: 1px solid #1C1917;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 1px;
+}
+
+.btn:hover {
+    background-color: #C59B4E;
+    border-color: #C59B4E;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+}
+
+.btn-outline:hover {
+    background-color: white;
+    color: #1C1917;
+    border-color: white;
+}
+
+/* Luxury Gold Shimmer Accent Animation */
+.shimmer-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 30%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.28);
+    transform: rotate(30deg);
+    animation: premiumGoldShimmer 4.5s infinite linear;
+}
+
+@keyframes premiumGoldShimmer {
+    0% { left: -60%; }
+    25% { left: 140%; }
+    100% { left: 140%; }
+}
+
+/* Home Structural Grids Spacers */
+.home-collections, .bestsellers, .testimonials-section, .instagram-preview {
+    padding: 80px 6%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #6B6560;
+    margin-bottom: 50px;
+    font-size: 15px;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 30px;
+}
+
+.collection-card {
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    padding: 16px 16px 24px 16px;
+    border: 1px solid #E3DDD4;
+    transition: all 0.3s;
+}
+
+.collection-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background-color: #F5F1EB;
+}
+
+.collection-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.collection-card:hover .collection-img img {
+    transform: scale(1.05);
+}
+
+.collection-card h3 {
+    font-size: 19px;
+    font-weight: 500;
+    color: #1C1917;
+    margin-bottom: 4px;
+}
+
+.collection-card span {
+    font-size: 12px;
+    color: #C59B4E;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* E-Commerce Product Responsive Grid Core Blueprint */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #E3DDD4;
+    padding: 16px;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(28,25,23,0.05);
+    border-color: #C59B4E;
+}
+
+.product-image-frame {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background-color: #F5F1EB;
+    margin-bottom: 16px;
+    position: relative;
+    cursor: pointer;
+}
+
+.product-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-image-frame img {
+    transform: scale(1.04);
+}
+
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #C59B4E;
+    color: white;
+    font-size: 10px;
+    padding: 3px 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.quick-view-overlay {
+    position: absolute;
+    bottom: -45px;
+    left: 0;
+    width: 100%;
+    background-color: rgba(28,25,23,0.92);
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-image-frame:hover .quick-view-overlay {
+    bottom: 0;
+}
+
+.product-card h3 {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #1C1917;
+}
+
+.product-style-tag {
+    font-size: 11px;
+    color: #9C948B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    color: #C59B4E;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+/* Emotional Brand Narrative Section */
+.brand-story-preview {
+    background-color: #1C1917;
+    color: white;
+    text-align: center;
+    padding: 95px 4%;
+}
+
+.story-preview-content {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.gold-tag {
+    color: #C59B4E;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.story-preview-content h2 {
+    font-size: 38px;
+    font-weight: 400;
+    margin-bottom: 22px;
+}
+
+.story-preview-content p {
+    color: #9C948B;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 15px;
+    margin-bottom: 38px;
+}
+
+/* Infinite Scrolling Testimonial Matrix Track Layout */
+.testimonial-slider-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 15px 0;
+}
+
+.testimonial-track {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+    animation: continuousInfinityScroll 40s linear infinite;
+}
+
+.testimonial-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes continuousInfinityScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.testimonial-card {
+    background: white;
+    border: 1px solid #E3DDD4;
+    padding: 34px;
+    width: 330px;
+}
+
+.stars { color: #C59B4E; margin-bottom: 14px; font-size: 12px; }
+.testimonial-card p { font-style: italic; color: #6B6560; font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.testimonial-card h4 { font-size: 15px; font-weight: 600; }
+
+.ig-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.ig-item { aspect-ratio: 1; overflow: hidden; border: 1px solid #E3DDD4; }
+.ig-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.ig-item:hover img { transform: scale(1.05); }
+
+/* ==========================================================================
+   5. ADVANCED CATALOG VIEWPORT (SHOP FRAME WITH FILTERS)
+   ========================================================================== */
+.shop-container {
+    display: flex;
+    padding: 60px 6%;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 45px;
+}
+
+.shop-sidebar {
+    width: 260px;
+    shrink: 0;
+}
+
+.shop-main-content {
+    flex-grow: 1;
+}
+
+.filter-group {
+    margin-bottom: 35px;
+    border-bottom: 1px solid #E3DDD4;
+    padding-bottom: 22px;
+}
+
+.filter-group h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.filter-options .radio-label {
+    display: block;
+    font-size: 14px;
+    color: #6B6560;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.filter-options .radio-label:hover {
+    color: #1C1917;
+}
+
+.filter-options input {
+    margin-right: 10px;
+    accent-color: #C59B4E;
+}
+
+#shop-sorting {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #E3DDD4;
+    background: white;
+    font-family: inherit;
+    font-size: 13px;
+    color: #1C1917;
+    outline: none;
+}
+
+/* Trust sidebar component widget */
+.trust-sidebar-widget {
+    background-color: white;
+    border: 1px dashed #C59B4E;
+    padding: 20px;
+    border-radius: 2px;
+    margin-top: 40px;
+}
+
+.trust-sidebar-widget h4 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #C59B4E;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trust-sidebar-widget p {
+    font-size: 13px;
+    color: #6B6560;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   6. EXTENDED PRODUCT DETAIL PAGE (PDP LOOKUPS)
+   ========================================================================== */
+.pdp-container {
+    padding: 60px 4%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pdp-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    margin-bottom: 80px;
+}
+
+.pdp-gallery {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid #E3DDD4;
+    background-color: white;
+}
+
+.pdp-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pdp-gallery:hover img {
+    transform: scale(1.12);
+    cursor: zoom-in;
+}
+
+.pdp-details h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #1C1917;
+}
+
+.pdp-price {
+    font-size: 24px;
+    color: #C59B4E;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.pdp-description {
+    font-size: 15px;
+    color: #6B6560;
+    line-height: 1.65;
+    margin-bottom: 28px;
+}
+
+.pdp-specs {
+    margin-bottom: 30px;
+    border-top: 1px solid #E3DDD4;
+    padding-top: 24px;
+}
+
+.spec-line {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #1C1917;
+}
+
+.spec-line strong {
+    font-weight: 600;
+    color: #6B6560;
+    display: inline-block;
+    width: 130px;
+}
+
+.why-love-list {
+    margin-bottom: 35px;
+    padding-left: 18px;
+}
+
+.why-love-list li {
+    font-size: 14px;
+    color: #1C1917;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.pdp-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.pdp-actions .btn {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* ==========================================================================
+   7. MANIFESTO (ABOUT) & CONTACT INTERFACES
+   ========================================================================== */
+.about-hero {
+    height: 42vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.about-hero-text h1 { font-size: 46px; margin-bottom: 12px; }
+.about-hero-text p { font-weight: 300; font-size: 17px; color: rgba(255,255,255,0.9); }
+.about-body { padding: 90px 8%; max-width: 960px; margin: 0 auto; text-align: center; }
+.about-block h2 { font-size: 32px; margin-bottom: 24px; font-weight: 500; }
+.about-block p { color: #6B6560; line-height: 1.8; font-size: 16px; margin-bottom: 60px; text-align: justify; }
+
+.about-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.feature-pill { background: white; border: 1px solid #E3DDD4; padding: 30px 20px; text-align: center; }
+.feature-pill i { font-size: 26px; color: #C59B4E; margin-bottom: 16px; display: block; }
+.feature-pill h3 { font-size: 17px; margin-bottom: 10px; font-weight: 600; }
+.feature-pill p { font-size: 13px; color: #6B6560; line-height: 1.5; text-align: center; }
+
+/* Contact Forms Split Frame */
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 45px;
+    padding: 80px 6%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-form-card, .contact-meta-card { background: white; border: 1px solid #E3DDD4; padding: 45px; }
+.contact-form-card h2, .contact-meta-card h2 { font-size: 28px; margin-bottom: 25px; font-weight: 500; }
+
+.input-field {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #E3DDD4;
+    background-color: #F5F1EB;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 22px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.input-field:focus { border-color: #C59B4E; background-color: #FFFFFF; }
+.success-banner { display: none; background-color: #25D366; color: white; padding: 14px; font-weight: 600; font-size: 14px; text-align: center; margin-top: 15px; }
+
+.contact-item { font-size: 15px; margin-bottom: 18px; color: #1C1917; display: flex; align-items: center; }
+.contact-item i { color: #C59B4E; margin-right: 12px; font-size: 16px; width: 20px; }
+.address-box { margin-top: 35px; border-top: 1px solid #E3DDD4; padding-top: 24px; }
+.address-box h3 { font-size: 17px; margin-bottom: 10px; }
+.address-box p { font-size: 14px; color: #6B6560; line-height: 1.4; }
+.map-wrapper { margin-top: 24px; border: 1px solid #E3DDD4; overflow: hidden; line-height: 0; }
+
+/* ==========================================================================
+   8. COMPACT SLIDING DRAWER SHOPPING CART
+   ========================================================================== */
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -480px;
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+    background: white;
+    box-shadow: -12px 0 40px rgba(0,0,0,0.08);
+    transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-drawer.open { right: 0; }
+.cart-header { display: flex; justify-content: space-between; align-items: center; padding: 26px; border-bottom: 1px solid #E3DDD4; }
+.cart-header h3 { font-size: 20px; font-weight: 600; }
+.close-btn { font-size: 32px; background: none; border: none; cursor: pointer; color: #9C948B; line-height: 1; }
+.cart-items { flex-grow: 1; overflow-y: auto; padding: 26px; }
+
+.cart-item { display: flex; align-items: center; margin-bottom: 24px; border-bottom: 1px solid #F5F1EB; padding-bottom: 18px; }
+.cart-item img { width: 70px; height: 70px; object-fit: cover; margin-right: 18px; border: 1px solid #E3DDD4; background-color: #F5F1EB; }
+.cart-item-details { flex-grow: 1; }
+.cart-item-details h4 { font-size: 16px; font-weight: 600; color: #1C1917; }
+.cart-item-details p { font-size: 14px; color: #C59B4E; margin-top: 4px; font-weight: 500; }
+.remove-item-btn { color: #9C948B; cursor: pointer; border: none; background: none; font-size: 12px; margin-top: 8px; text-decoration: underline; display: block; }
+.remove-item-btn:hover { color: #EF4444; }
+
+.cart-footer { padding: 26px; border-top: 1px solid #E3DDD4; background-color: #F5F1EB; }
+.total-row { display: flex; justify-content: space-between; font-size: 18px; font-weight: 600; margin-bottom: 24px; color: #1C1917; }
+
+.checkout-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #25D366;
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.checkout-btn:hover { background-color: #128C7E; }
+
+/* Floating Functional WhatsApp Widget Node Hook */
+.floating-whatsapp-anchor {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    text-decoration: none;
+    z-index: 90;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-whatsapp-anchor:hover { transform: scale(1.1); }
+footer { background-color: #1C1917; text-align: center; padding: 40px 20px; color: #9C948B; font-size: 13px; letter-spacing: 0.5px; }
+
+/* ==========================================================================
+   9. COMPREHENSIVE RESPONSIVE DESIGN MEDIA ADAPTERS
+   ========================================================================== */
+@media(max-width: 768px) {
+    header { padding: 16px 4%; flex-direction: column; gap: 16px; text-align: center; }
+    .header-actions { width: 100%; justify-content: space-between; gap: 14px; }
+    .search-bar-container { width: 80%; }
+    .search-bar-container:focus-within { width: 83%; }
+    .hero-content h2 { font-size: 34px; }
+    .shop-container, .contact-layout, .pdp-layout { grid-template-columns: 1fr; flex-direction: column; gap: 40px; }
+    .shop-sidebar { width: 100%; }
+    .trust-sidebar-widget { margin-top: 20px; }
+    .about-features-grid { grid-template-columns: 1fr; gap: 20px; }
+    .ig-grid { grid-template-columns: repeat(2, 1fr); }
+    .pdp-actions { flex-direction: column; }
+}
+
+/* AI Stylist Widget Styles (Feature 16) */
+.ai-bot-widget-container {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    width: 320px;
+    z-index: 900;
+    background: white;
+    border: 1px solid #E3DDD4;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.ai-chat-header {
+    background-color: #1C1917;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ai-chat-body { padding: 14px; }
+
+.chat-logs {
+    height: 180px;
+    overflow-y: auto;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.chat-logs p { margin-bottom: 8px; padding: 6px 10px; border-radius: 4px; line-height: 1.4; }
+.bot-msg { background-color: #F5F1EB; text-align: left; }
+.user-msg { background-color: #C59B4E; color: white; text-align: right; }
+
+.chat-input-bar { display: flex; gap: 6px; }
+.chat-input-bar input { flex-grow: 1; padding: 6px; border: 1px solid #E3DDD4; outline: none; }
+.chat-input-bar button { background: none; border: none; color: #C59B4E; cursor: pointer; font-size: 16px; }
+
+/* ===========================================================================
+   10. MERGED CART + PRODUCT DETAIL ENHANCEMENTS
+   =========================================================================== */
+.cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    z-index: 190;
+}
+
+.cart-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.empty-cart-message {
+    color: #6B6560;
+    text-align: center;
+    padding: 50px 10px;
+    font-size: 14px;
+}
+
+.cart-qty-controls {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #E3DDD4;
+    margin-top: 10px;
+    background: #F5F1EB;
+}
+
+.cart-qty-controls button {
+    width: 30px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #1C1917;
+    font-weight: 700;
+}
+
+.cart-qty-controls span {
+    min-width: 32px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.continue-shopping-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    background: transparent;
+    color: #1C1917;
+    border: 1px solid #1C1917;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.continue-shopping-btn:hover {
+    background: #1C1917;
+    color: white;
+}
+
+#cart-toast {
+    position: fixed;
+    right: 30px;
+    bottom: 160px;
+    background: #1C1917;
+    color: white;
+    padding: 14px 18px;
+    border-left: 4px solid #C59B4E;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    max-width: 310px;
+}
+
+#cart-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pdp-back-btn {
+    background: transparent;
+    border: none;
+    color: #6B6560;
+    cursor: pointer;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.pdp-back-btn:hover {
+    color: #C59B4E;
+}
+
+.pdp-badge {
+    display: inline-block;
+    background: #C59B4E;
+    color: white;
+    padding: 5px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.whatsapp-pdp-btn {
+    background: #25D366;
+    border-color: #25D366;
+}
+
+.whatsapp-pdp-btn:hover {
+    background: #128C7E;
+    border-color: #128C7E;
+}
+
+@media(max-width: 768px) {
+    .cart-drawer {
+        max-width: 100%;
+        right: -100%;
+    }
+
+    #cart-toast {
+        left: 20px;
+        right: 20px;
+        bottom: 150px;
+        max-width: unset;
+    }
+
+    .floating-whatsapp-anchor {
+        bottom: 22px;
+        right: 22px;
+    }
+}
+
+/* ===========================================================================
+   11. PREMIUM CANVA INVOICE LAYOUT DESIGN SYSTEM
+   =========================================================================== */
+#receipt-modal-container {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.invoice-canvas-paper {
+    background: #FFFFFF;
+    padding: 60px 50px;
+    position: relative;
+    color: #1C1917;
+}
+
+/* Elegant line detailing mirroring the Canva template asset dots */
+.invoice-decorative-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.invoice-decorative-line::before, .invoice-decorative-line::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border: 1px solid #1C1917;
+    border-radius: 50%;
+    background: #FFFFFF;
+    display: inline-block;
+}
+
+.invoice-decorative-line-inner {
+    flex-grow: 1;
+    height: 1px;
+    background: #1C1917;
+    margin: 0 2px;
+}
+
+.invoice-table-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #1C1917;
+    text-transform: uppercase;
+}
+
+/* HIGH-PRECISION REVISED PRINT TARGET INTERFACES - FIXES BLANK PAGE EXPORTS */
+@media print {
+    /* Hide top-level layout sections rather than deep nested elements */
+    body > * {
+        display: none !important;
+    }
+    
+    /* Force activate and pin modal content area context flawlessly */
+    #receipt-modal-container {
+        display: flex !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: #FFFFFF !important;
+    }
+    
+    /* Stretch paper bounding grid directly matching system printing bounds */
+    #receipt-print-area {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Strip away control bar containing print and exit utility buttons */
+    #receipt-modal-container > div > div:first-child {
+        display: none !important;
+    }
+}
+
+```

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pehramani - Curated Jewellery | Jewellery as fearless as you are</title>
+    <meta name="description" content="Discover bold, curated statement jewellery sourced directly from Mumbai's vibrant fashion lanes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+        
+    <style>
+        /* ================= ANIMATION & TRANSITION CORE ================= */
+        html { scroll-behavior: smooth; }
+        
+        body { animation: fadeInPage 1s ease-out; }
+        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Smooth Scroll Reveal Class */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Tactile Button Hover Effects */
+        button, .btn-filter { transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important; }
+        button:hover:not(.btn-filter), .btn-filter:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        button:active { transform: translateY(0); }
+
+        /* Floating AI Widget */
+        .ai-bot-widget-container { animation: floatBubble 4s ease-in-out infinite; transition: transform 0.3s ease; }
+        .ai-bot-widget-container:hover { animation-play-state: paused; transform: scale(1.05); }
+        @keyframes floatBubble {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Nav Link Underline Animation */
+        nav a { position: relative; text-decoration: none; display: inline-block; }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: #C59B4E; transition: width 0.3s ease; }
+        nav a:hover::after { width: 100%; }
+
+        /* ================= EXISTING STYLES ================= */
+        .category-bubble { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 15px auto; border: 1px solid #eaeaea; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .category-bubble img { width: 100%; height: 100%; object-fit: cover; }
+        .category-bubble:hover { transform: scale(1.1); border-color: #C59B4E; box-shadow: 0 10px 20px rgba(197, 155, 78, 0.2); }
+        
+        .trust-badge-icon { font-size: 2em; color: #C59B4E; margin-bottom: 15px; transition: transform 0.5s ease; }
+        .trust-badge-container:hover .trust-badge-icon { transform: rotateY(180deg); }
+        
+        /* ORIGINAL INSTAGRAM GRID STYLES (UNTOUCHED) */
+        .ig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .ig-post { aspect-ratio: 1/1; background: #eaeaea; position: relative; cursor: pointer; overflow: hidden; border-radius: 4px; }
+        .ig-post img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .ig-post:hover img { transform: scale(1.08); }
+        .ig-post:hover::after { content: '\f16d'; font-family: 'Font Awesome 6 Brands'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 2em; z-index: 2; animation: popIn 0.3s ease forwards; }
+        .ig-post::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.3s ease; z-index: 1; }
+        .ig-post:hover::before { opacity: 1; }
+        @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, -30%); } 100% { opacity: 1; transform: translate(-50%, -50%); } }
+
+        .announcement-container { background: #111; color: #C59B4E; text-align: center; font-size: 0.8em; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; overflow: hidden; position: relative; height: 40px; }
+        .announcement-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+        .announcement-slide.active { opacity: 1; transform: translateY(0); }
+
+        .testimonial-card { background: #fff; border: 1px solid #eaeaea; padding: 30px; min-width: 300px; flex: 0 0 auto; margin-right: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-radius: 8px; transition: transform 0.3s ease; }
+        .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .testimonial-stars { color: #C59B4E; margin-bottom: 15px; font-size: 0.9em; }
+
+        .mega-footer { background: #fbfbfb; border-top: 1px solid #eaeaea; padding: 80px 5% 40px 5%; font-family: 'Inter', sans-serif; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; max-width: 1400px; margin: 0 auto; }
+        @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+        .footer-heading { font-family: 'Playfair Display', serif; font-size: 1.2em; font-weight: 600; color: #111; margin-bottom: 25px; }
+        .footer-list { list-style: none; padding: 0; margin: 0; }
+        .footer-list li { margin-bottom: 12px; }
+        .footer-list a { color: #555; text-decoration: none; font-size: 0.9em; transition: color 0.3s ease; display: inline-block; }
+        .footer-list a:hover { color: #C59B4E; transform: translateX(5px); }
+        .footer-social-icons a { color: #111; font-size: 1.2em; margin-right: 15px; transition: all 0.3s ease; display: inline-block; }
+        .footer-social-icons a:hover { color: #C59B4E; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+    <div class="announcement-container">
+        <div class="announcement-slide active">Free Shipping on orders above Rs. 1000</div>
+        <div class="announcement-slide">Premium Quality Anti-tarnish, skin-friendly statement pieces.</div>
+        <div class="announcement-slide">Pan India Shipping Fast & reliable delivery across the country.</div>
+        <div class="announcement-slide">Secure Checkout 100% secure payment gateway integration.</div>
+        <div class="announcement-slide">New Arrivals Dropped: Mumbai Edition</div>
+    </div>
+
+    <header style="position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+        <div class="logo" style="cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="navigateTo('view-home')">
+            <h1>PEHRAMANI</h1>
+            <p>MUMBAI</p>
+        </div>
+        <nav>
+            <a href="#home" onclick="navigateTo('view-home')">Home</a>
+            <a href="#shop" onclick="navigateTo('view-shop')">Shop Collection</a>
+            <a href="#about" onclick="navigateTo('view-about')">Our Story</a>
+            <a href="#contact" onclick="navigateTo('view-contact')">Contact HQs</a>
+            <a href="#dashboard" onclick="navigateTo('view-dashboard')" style="display: none; color:#C59B4E; font-weight:700;">Client Hub</a>
+        </nav>
+        <div class="header-actions">
+            <div class="search-bar-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="global-search-input" placeholder="Search bold styles..." oninput="handleGlobalSearch(event)" style="transition: width 0.4s ease;">
+            </div>
+            <div class="cart-icon" style="cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div id="page-content">
+        
+        <div id="view-home" class="view-section active">
+            
+            <div class="hero-section reveal" style="padding: 140px 5%; text-align: center; background: linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), url('https://i.ibb.co/SwnCB5xD/Gemini-Generated-Image-mlfwhsmlfwhsmlfw.png') center/cover no-repeat; border-bottom: 1px solid #eaeaea;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 3.5em; color: #111; margin-bottom: 20px;">Jewellery as Fearless as You Are.</h2>
+                <p style="font-size: 1.1em; color: #333; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6; font-weight: 500;">Curated statement pieces sourced directly from Mumbai's vibrant fashion lanes.</p>
+                <button onclick="navigateTo('view-shop')" style="background: #111; color: #fff; padding: 16px 40px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">Shop The Collection</button>
+            </div>
+
+            <div class="reveal" style="padding: 80px 5%; text-align: center; border-bottom: 1px solid #eaeaea;">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 50px;">Shop By Category</h3>
+                <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                    
+                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('earrings', {currentTarget: document.querySelectorAll('.btn-filter')[1]}), 100);">
+                        <div class="category-bubble">
+                            <img src="https://i.ibb.co/dsXM7CLY/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg"
+                                 style="object-position: center 60%;">
+                        </div>
+                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">EARRINGS</span>
+                    </div>
+                    
+                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('rings', {currentTarget: document.querySelectorAll('.btn-filter')[2]}), 100);">
+                        <div class="category-bubble">
+                            <img src="https://i.ibb.co/Df1cLDs7/image.jpg"
+                                 style="object-position: center center;">
+                        </div>
+                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">RINGS</span>
+                    </div>
+                    
+                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('necklaces', {currentTarget: document.querySelectorAll('.btn-filter')[4]}), 100);">
+                        <div class="category-bubble">
+                            <img src="https://i.ibb.co/VcWY2gvm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg"
+                                 style="object-position: center 75%;">
+                        </div>
+                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">NECKLACES</span>
+                    </div>
+                    
+                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('bracelets', {currentTarget: document.querySelectorAll('.btn-filter')[3]}), 100);">
+                        <div class="category-bubble">
+                            <img src="https://i.ibb.co/s96wk4d4/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg"
+                                 style="object-position: center center;">
+                        </div>
+                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">BRACELETS</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="reveal" style="padding: 80px 5%;">
+                <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">Featured Bestsellers</h3>
+                <div id="home-featured-grid" class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; justify-content: center;"></div>
+            </div>
+
+            <div class="reveal" style="background: #fbfbfb; padding: 80px 5%; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; max-width: 1200px; margin: 0 auto;">
+                    <div class="trust-badge-container">
+                        <i class="fa-solid fa-truck-fast trust-badge-icon"></i>
+                        <h4 style="margin-bottom:10px; font-weight:600;">Pan India Shipping</h4>
+                        <p style="font-size:0.85em; color:#555;">Fast & reliable delivery across the country.</p>
+                    </div>
+                    <div class="trust-badge-container">
+                        <i class="fa-solid fa-box-open trust-badge-icon"></i>
+                        <h4 style="margin-bottom:10px; font-weight:600;">Free Standard Delivery</h4>
+                        <p style="font-size:0.85em; color:#555;">On all prepaid orders above Rs. 1000.</p>
+                    </div>
+                    <div class="trust-badge-container">
+                        <i class="fa-solid fa-lock trust-badge-icon"></i>
+                        <h4 style="margin-bottom:10px; font-weight:600;">Secure Checkout</h4>
+                        <p style="font-size:0.85em; color:#555;">100% secure payment gateway integration.</p>
+                    </div>
+                    <div class="trust-badge-container">
+                        <i class="fa-solid fa-gem trust-badge-icon"></i>
+                        <h4 style="margin-bottom:10px; font-weight:600;">Premium Quality</h4>
+                        <p style="font-size:0.85em; color:#555;">Anti-tarnish, skin-friendly statement pieces.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" style="padding: 80px 5%; background: #fff; overflow: hidden;">
+                <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">Loved by Our Clients</h3>
+                <div style="display: flex; overflow-x: auto; padding-bottom: 20px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: thin;">
+                    <div class="testimonial-card reveal">
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Obsessed with the Hoops!</h4>
+                        <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"The weight and finish on these earrings are incredible. They look so much more expensive than they are."</p>
+                        <p style="font-weight: 600; font-size: 0.85em;">- Aisha R.</p>
+                    </div>
+                    <div class="testimonial-card reveal">
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Perfect Statement Piece</h4>
+                        <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"I bought the layered choker for a wedding and got so many compliments. Customer service was also very helpful."</p>
+                        <p style="font-weight: 600; font-size: 0.85em;">- Priyanka S.</p>
+                    </div>
+                    <div class="testimonial-card reveal">
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Amazing Quality</h4>
+                        <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"Fast delivery to Bangalore and the packaging was beautiful. The anti-tarnish promise is real."</p>
+                        <p style="font-weight: 600; font-size: 0.85em;">- Meera K.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESTORED ORIGINAL STATIC INSTAGRAM GRID UI WITH DYNAMIC JS INTEGRATION -->
+            <div class="reveal" style="padding: 0 5% 80px 5%; text-align: center;">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 10px;">Follow Us on Instagram</h3>
+                <p style="color: #C59B4E; margin-bottom: 40px; font-weight: 600;"><a href="https://instagram.com/pehramani___" target="_blank" style="color: inherit; text-decoration: none;">@pehramani___</a></p>
+                
+                <!-- We give this an ID so JavaScript can target it and replace the images securely -->
+                <div class="ig-grid" id="instagram-live-grid">
+                    <!-- Fallback Images (These show up instantly, and get replaced if the API connects) -->
+                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                        <img src="https://i.ibb.co/rX0fFtm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg" style="object-position: center 60%;" alt="Pehramani Earrings">
+                    </div>
+                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                        <img src="https://i.ibb.co/ymMbJkJd/image.jpg" style="object-position: center center;" alt="Pehramani Rings">
+                    </div>
+                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                        <img src="https://i.ibb.co/Txhh1T7J/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg" style="object-position: center 75%;" alt="Pehramani Necklace">
+                    </div>
+                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                        <img src="https://i.ibb.co/8DC7S3x6/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg" style="object-position: center center;" alt="Pehramani Bracelet">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="view-shop" class="view-section reveal" style="display: none;">
+            <h2 style="text-align: center; margin: 60px 0 40px 0; font-family: 'Playfair Display', serif; font-size: 2.5em;">Our Curated Collection</h2>
+            <div id="dynamic-filter-container" class="filter-container" style="text-align: center; margin-bottom: 50px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                <button class="btn-filter target-filter-active" onclick="filterCategory('all', event)" style="padding: 10px 24px; background: #111; color: #fff; border: 1px solid #111; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; border-radius: 30px;">ALL</button>
+            </div>
+            <div id="shop-catalog-grid" class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; padding: 0 5% 80px 5%; justify-content: center;"></div>
+        </div>
+
+
+
+        <div id="view-product-detail" class="view-section reveal" style="display: none;">
+            <div id="product-detail-container" class="pdp-container"></div>
+        </div>
+
+        <!-- ABOUT / OUR STORY VIEW -->
+        <div id="view-about" class="view-section reveal" style="display: none;">
+            <div style="padding: 100px 5%; max-width: 1200px; margin: 0 auto;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; text-align: center; margin-bottom: 60px;">Our Story</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+                    
+                    <!-- LEFT SIDE: IMAGE -->
+                    <div style="width: 100%; aspect-ratio: 4/5; overflow: hidden; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+                        <img src="https://i.ibb.co/gLRP30Q9/Gemini-Generated-Image-urx73vurx73vurx7-ezremove.png" alt="Pehramani Legacy" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    
+                    <!-- RIGHT SIDE: STORY CONTENT -->
+                    <div style="background: #fbfbfb; padding: 50px; line-height: 1.8; color: #444; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em; color: #111; margin-bottom: 20px;">The Art of Adornment</h3>
+                        
+                        <p style="margin-bottom: 20px; font-size: 1.1em;">
+                            The brand name <strong style="color:#C59B4E;">Pehramani</strong> fundamentally means <strong style="color:#C59B4E;">to adorn</strong>. It is rooted deeply in the core belief that adornment is far more than just decoration—it is an essential form of identity, memory, and personal power.
+                        </p>
+                        
+                        <p style="margin-bottom: 20px; font-size: 1.1em;">
+                            Born in the heart of Mumbai, Pehramani was inspired by vivid childhood memories of a mother’s jewellery box, where every single piece held a unique story or a specific moment in time. We observed a gap between soulful, high-quality craftsmanship and accessible everyday pricing. Pehramani was established to bridge that divide.
+                        </p>
+                        
+                        <p style="margin-bottom: 20px; font-size: 1.1em;">
+                            We travel directly through the vibrant, bustling fashion lanes of India, collaborating with passionate local artisans to hand-select intention-driven designs. From heavy geometric gold hoops that demand attention to delicate, minimalist sterling bands, our collections are curated for the modern wearer who uses style as a fearless canvas.
+                        </p>
+                        
+                        <p style="font-size: 1.1em; font-weight: 500; font-style: italic; color: #111;">
+                            We don't just sell jewellery; we curate confidence.
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="view-contact" class="view-section reveal" style="display: none;">
+            <div style="padding: 100px 5%; max-width: 1000px; margin: 0 auto; text-align: center;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; margin-bottom: 50px;">Contact HQs</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; text-align: left;">
+                    <div style="background: #fbfbfb; padding: 40px; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #111;">Get in Touch</h3>
+                        <p style="margin-bottom: 15px; color: #555;"><i class="fa-solid fa-envelope" style="color:#C59B4E; width: 25px;"></i> pehramani@gmail.com</p>
+                        <p style="margin-bottom: 15px; color: #555;"><i class="fa-solid fa-phone" style="color:#C59B4E; width: 25px;"></i> +91 90820 37084</p>
+                        <p style="margin-bottom: 30px; color: #555;"><i class="fa-solid fa-clock" style="color:#C59B4E; width: 25px;"></i> Mon - Sat, 10:00 AM - 7:00 PM (IST)</p>
+                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #111; margin-top: 40px;">Studio Location</h3>
+                        <p style="color: #555; line-height: 1.6;">101 Artisan Lane,<br>Colaba Arts District,<br>Mumbai, Maharashtra 400001<br>India</p>
+                        <div class="map-container" style="width: 100%; height: 250px; margin-top: 20px; border-radius: 4px; overflow: hidden;">
+                            <iframe src="https://maps.google.com/maps?q=Colaba%20Arts%20District,%20Mumbai&t=&z=13&ie=UTF8&iwloc=&output=embed" style="width: 100%; height: 100%; border: 0; filter: grayscale(100%) contrast(1.1);" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #eaeaea; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 25px; color: #111;">Send a Message</h3>
+                        <form onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();" style="display: flex; flex-direction: column; gap: 20px;">
+                            <input type="text" placeholder="Your Name" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'">
+                            <input type="email" placeholder="Your Email" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'">
+                            <textarea placeholder="Your Message" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; height: 150px; resize: vertical; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'"></textarea>
+                            <button type="submit" style="background: #111; color: #fff; padding: 18px; border: none; cursor: pointer; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; border-radius: 4px;">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-dashboard" class="view-section reveal" style="display: none;">
+            <div style="padding: 100px 5%; max-width: 800px; margin: 0 auto;">
+                <div id="db-login-portal" style="padding: 50px; background: #fff; border: 1px solid #eaeaea; max-width: 450px; margin: 0 auto; text-align: center; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.05);">
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 20px;">Client Access</h2>
+                    <form onsubmit="handleClientLoginFake(event);">
+                        <input type="email" placeholder="Email Address" required style="padding: 15px; margin-bottom: 20px; width: 100%; border: 1px solid #eaeaea; border-radius: 4px;">
+                        <input type="password" placeholder="Password" required style="padding: 15px; margin-bottom: 25px; width: 100%; border: 1px solid #eaeaea; border-radius: 4px;">
+                        <button type="submit" style="width: 100%; background: #111; color: #fff; padding: 16px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; border-radius: 4px;">Sign In</button>
+                    </form>
+                </div>
+                <div id="db-user-portal" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 20px; margin-bottom: 40px;">
+                        <div>
+                            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5em; margin: 0;">Welcome back</h2>
+                        </div>
+                        <button onclick="handleClientLogoutFake()" style="background: none; border: 1px solid #ccc; padding: 10px 20px; cursor: pointer; font-weight: 600; border-radius: 4px;">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+    <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping cart">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-btn" onclick="closeCart()" aria-label="Close cart">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p class="empty-cart-message">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+                    <div style="margin-bottom: 20px;">
+                        <label for="delivery-address" style="display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: #1C1917;">
+                            Delivery Address <span style="color: #EF4444;">*</span>
+                        </label>
+                        <textarea id="delivery-address" placeholder="Enter complete shipping address with pincode..." required style="width: 100%; height: 80px; padding: 12px; border: 1px solid #E3DDD4; background-color: #FFFFFF; font-family: inherit; font-size: 13px; color: #1C1917; outline: none; resize: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#C59B4E'" onblur="this.style.borderColor='#E3DDD4'"></textarea>
+                    </div>
+
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="cart-total">Rs. 0</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkoutWhatsApp()">
+                        <i class="fa-brands fa-whatsapp"></i> Checkout on WhatsApp
+                    </button>
+                    <button class="continue-shopping-btn" onclick="closeCart(); navigateTo('view-shop')">Continue Shopping</button>
+                </div>
+    </aside>
+
+    <a class="floating-whatsapp-anchor" href="https://wa.me/919082037084" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div id="ai-chat-widget" class="ai-bot-widget-container" style="display: none;">
+        <div class="ai-chat-header" style="cursor: pointer;" onclick="toggleAIChatWindow()">
+            <h4><i class="fa-solid fa-robot"></i> Pehramani AI Stylist</h4>
+            <span id="chat-toggle-icon"><i class="fa-solid fa-chevron-up"></i></span>
+        </div>
+        <div class="ai-chat-body" id="ai-chat-body-window" style="display: none;">
+            <div class="chat-logs" id="ai-chat-logs-box">
+                <p class="bot-msg">Hello! How can I assist you today?</p>
+            </div>
+            <div class="chat-input-bar">
+                <input type="text" id="ai-chat-input-field" placeholder="Ask AI Assistant...">
+                <button onclick="alert('AI Chat coming soon!')"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mega-footer reveal">
+        <div class="footer-grid">
+            <div>
+                <h3 class="footer-heading" style="font-size: 1.4em; margin-bottom: 15px;">Sign up to our newsletter & enjoy 10% off* your first order.</h3>
+                <p style="font-size: 0.9em; color: #555; margin-bottom: 25px; line-height: 1.6;">Be the first to hear about our newest arrivals, exclusive sales & everything else Pehramani. *Exclusions apply.</p>
+                <form onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();" style="display: flex; border-bottom: 2px solid #111; padding-bottom: 8px;">
+                    <input type="email" placeholder="Email address" required style="border: none; background: transparent; outline: none; width: 100%; font-family: 'Inter', sans-serif; font-size: 1em;">
+                    <button type="submit" style="background: transparent; border: none; cursor: pointer; font-size: 1.2em; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <div class="footer-social-icons" style="margin-top: 35px;">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-heading">Shop</h4>
+                <ul class="footer-list">
+                    <li><a href="#" onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('earrings', {currentTarget: document.querySelectorAll('.btn-filter')[1]}), 100);">Earrings</a></li>
+                    <li><a href="#" onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('necklaces', {currentTarget: document.querySelectorAll('.btn-filter')[4]}), 100);">Necklaces</a></li>
+                    <li><a href="#" onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('bracelets', {currentTarget: document.querySelectorAll('.btn-filter')[3]}), 100);">Bracelets</a></li>
+                    <li><a href="#" onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('rings', {currentTarget: document.querySelectorAll('.btn-filter')[2]}), 100);">Rings</a></li>
+                    <li><a href="#" onclick="navigateTo('view-shop')">Solid Gold</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Quicklinks</h4>
+                <ul class="footer-list">
+                    <li><a href="#" onclick="navigateTo('view-about')">About us</a></li>
+                    <li><a href="#">Pehramani Journal</a></li>
+                    <li><a href="#">Loyalty</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Newsletter Sign Up</a></li>
+                    <li><a href="#">Affiliates and Creators</a></li>
+                    <li><a href="#">Acknowledgement of Country</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Customer Care</h4>
+                <ul class="footer-list">
+                    <li><a href="#">Help Centre</a></li>
+                    <li><a href="#" onclick="navigateTo('view-contact')">Contact Us</a></li>
+                    <li><a href="#">Our Boutiques</a></li>
+                    <li><a href="#">Returns Portal</a></li>
+                    <li><a href="#">Recycling Program</a></li>
+                    <li><a href="#">Sizing</a></li>
+                    <li><a href="#">Shipping & Handling</a></li>
+                    <li><a href="#">Returns & Warranty Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyDAzMDcP2b7cN7cFRPI2LMV0JaGG1pSmvM",
+            authDomain: "pehramani-jewellery.firebaseapp.com",
+            projectId: "pehramani-jewellery",
+            storageBucket: "pehramani-jewellery.firebasestorage.app",
+            messagingSenderId: "1020807957770",
+            appId: "1:1020807957770:web:3c9ab1196599d64c2bfef3"
+        };
+        initializeApp(firebaseConfig);
+    </script>
+    
+    <script type="module" src="script.js"></script>
+
+    <script>
+        // 1. Automatic Announcement Slider Logic
+        setInterval(() => {
+            const slides = document.querySelectorAll('.announcement-slide');
+            if(slides.length === 0) return;
+            let activeIndex = -1;
+            slides.forEach((slide, index) => {
+                if(slide.classList.contains('active')) {
+                    activeIndex = index;
+                    slide.classList.remove('active');
+                    slide.style.transform = 'translateY(-20px)';
+                }
+            });
+            let nextIndex = activeIndex + 1;
+            if(nextIndex >= slides.length) nextIndex = 0;
+            
+            slides[nextIndex].style.transform = 'translateY(20px)';
+            void slides[nextIndex].offsetWidth;
+            
+            slides[nextIndex].classList.add('active');
+            slides[nextIndex].style.transform = 'translateY(0)';
+        }, 4000);
+
+        // 2. Intersection Observer for Scroll Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        if(entry.target.classList.contains('product-card')) {
+                            entry.target.style.transitionDelay = `${Math.random() * 0.3}s`;
+                            entry.target.style.opacity = 1;
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: "0px 0px -50px 0px", threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            setTimeout(() => {
+                document.querySelectorAll('.product-card').forEach(el => {
+                    if(!el.closest('#db-login-portal')) {
+                        el.style.opacity = 0;
+                        el.style.transform = 'translateY(30px)';
+                        el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                        revealObserver.observe(el);
+                    }
+                });
+            }, 1500);
+        });
+
+        // 3. Filter Logic
+        window.filterCategory = (selectedCategory, event) => {
+            const filterButtons = document.querySelectorAll('.btn-filter');
+            filterButtons.forEach(btn => {
+                btn.style.background = '#fff'; btn.style.color = '#111'; btn.style.borderColor = '#eaeaea';
+            });
+            if(event && event.currentTarget) {
+                event.currentTarget.style.background = '#111'; event.currentTarget.style.color = '#fff'; event.currentTarget.style.borderColor = '#111';
+            }
+            const productCards = document.querySelectorAll('#shop-catalog-grid .product-card');
+            productCards.forEach(card => {
+                const categoryElement = card.querySelector('p');
+                const productCategory = categoryElement ? categoryElement.innerText.toLowerCase().trim() : '';
+                if (selectedCategory === 'all' || productCategory === selectedCategory.toLowerCase().trim()) {
+                    card.style.display = 'flex';
+                    card.style.opacity = 0;
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => { card.style.opacity = 1; card.style.transform = 'translateY(0)'; }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        };
+
+        window.handleClientLoginFake = (e) => {
+            e.preventDefault();
+            document.getElementById('db-login-portal').style.display = 'none';
+            document.getElementById('db-user-portal').style.display = 'block';
+        };
+
+        window.handleClientLogoutFake = () => {
+            document.getElementById('db-user-portal').style.display = 'none';
+            document.getElementById('db-login-portal').style.display = 'block';
+        };
+
+        // ==========================================================================
+        // 4. CUSTOM INSTAGRAM JSON FETCH LOGIC (NO IFRAMES, EXACT UI MAINTAINED)
+        // ==========================================================================
+        async function fetchLiveInstagramFeed() {
+            const grid = document.getElementById('instagram-live-grid');
+            
+            try {
+                /*
+                  To make this live, sign up for a JSON feed aggregator like Behold.so or Curator.io
+                  They will give you an API endpoint URL. Replace the URL below with your actual endpoint.
+                */
+                const API_ENDPOINT = 'https://api.behold.so/YOUR_CUSTOM_FEED_ID_HERE';
+                
+                // Fetch the data
+                const response = await fetch(API_ENDPOINT);
+                
+                // If the fetch fails or you haven't set up the API yet, it will throw an error
+                // and safely leave your static fallback images exactly as they are.
+                if (!response.ok) throw new Error('Using fallback static images');
+                
+                const data = await response.json();
+
+                // If data successfully loads, clear out the static fallback images
+                if (data && data.length > 0) {
+                    grid.innerHTML = '';
+                    
+                    // Loop through the first 4 posts and inject them with your EXACT CSS classes
+                    data.slice(0, 4).forEach(post => {
+                        const postDiv = document.createElement('div');
+                        // Use your exact custom UI classes
+                        postDiv.className = 'ig-post reveal active';
+                        
+                        // Make the custom UI block clickable to the live post
+                        postDiv.onclick = () => window.open(post.permalink || 'https://instagram.com/pehramani___', '_blank');
+                        
+                        const img = document.createElement('img');
+                        // Use the image URL provided by the JSON API
+                        img.src = post.mediaUrl;
+                        img.alt = "Pehramani Live Instagram Post";
+                        
+                        // Append elements maintaining your perfect HTML structure
+                        postDiv.appendChild(img);
+                        grid.appendChild(postDiv);
+                    });
+                }
+            } catch (error) {
+                console.log('Instagram Live Fetch bypassed. Static fallback images are actively rendering your UI.');
+            }
+        }
+        
+        // Execute the fetch attempt when the page loads
+        fetchLiveInstagramFeed();
+    </script>
+    
+    <!-- PRINTABLE RECEIPT MODAL FRAME CONTAINER -->
+    <div id="receipt-modal-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+        <div style="background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; font-family: 'Inter', sans-serif;">
+            
+            <!-- Top Control Dashboard Bar -->
+            <div style="background: #1C1917; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2E2A27;">
+                <span style="color: #fff; font-weight: 600; font-size: 0.85em; letter-spacing: 1px; text-transform: uppercase;">System Invoice Document</span>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="window.downloadInvoiceImage()" style="background: #C59B4E; color: #fff; border: none; padding: 8px 16px; font-weight: 600; font-size: 0.8em; border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">Download Receipt Image</button>
+                    <button onclick="document.getElementById('receipt-modal-container').style.display='none'" style="background: transparent; color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; font-weight: 600; font-size: 0.8em; border-radius: 4px; cursor: pointer;">Close</button>
+                </div>
+            </div>
+            
+            <!-- THE PHYSICAL RECEIPT CANVAS PAPER AREA (Scrollable on screen, but fully captured on download) -->
+            <div id="receipt-print-area-wrapper" style="overflow-y: auto; flex-grow: 1; background: #ffffff;">
+                <div id="receipt-print-area" style="background: #ffffff; width: 100%;">
+                    <!-- JavaScript dynamically injects the Canva design template structure here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
