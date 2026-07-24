@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+        <!-- CRUCIAL PWA TAGS: This makes it behave like a native iOS app when added to the home screen -->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            
+            <!-- FIXED: Added standard mobile web app tag alongside the Apple one -->
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta name="mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+            
+            <title>Pehramani Admin</title>
+            
+            <!-- FIXED: Tells the browser to stop looking for a favicon.ico file -->
+            <link rel="icon" href="data:,">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #131313;
+            --input-color: #1A1A1A;
+            --primary: #4b8eff;
+            --secondary: #53e16f;
+            --error: #ff5545;
+            --text-variant: #8b90a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: white; -webkit-font-smoothing: antialiased; overflow-x: hidden; padding-bottom: 120px; }
+        
+        /* Password Screen Overlay */
+        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        .auth-card { width: 100%; max-width: 350px; background: var(--input-color); padding: 30px; border-radius: 24px; border: 1px solid #222; display: flex; flex-direction: column; gap: 20px; text-align: center; }
+        .auth-card h2 { font-size: 20px; color: var(--primary); font-weight: 700; }
+        .auth-card p { font-size: 14px; color: var(--text-variant); }
+        .auth-btn { background: var(--primary); color: white; border: none; padding: 16px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
+        .auth-btn:active { transform: scale(0.98); }
+
+        header { padding: 20px; position: sticky; top: 0; background: rgba(19, 19, 19, 0.9); backdrop-filter: blur(10px); z-index: 100; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; }
+        header h1 { font-size: 22px; color: var(--primary); font-weight: 700; }
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+        .batch-indicator { background: var(--secondary); color: #002107; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; display: none; cursor: pointer; transition: transform 0.2s; }
+        .batch-indicator:active { transform: scale(0.95); }
+
+        .container { padding: 0 20px; display: flex; flex-direction: column; gap: 20px; margin-top: 10px; }
+        .tab-view { display: none; flex-direction: column; gap: 20px; }
+        .tab-view.active { display: flex; }
+
+        .image-upload-container { width: 100%; aspect-ratio: 1; background: var(--input-color); border: 2px dashed #414755; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; transition: border-color 0.3s; }
+        .image-upload-container img.preview { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none; z-index: 5; }
+        .upload-icon-circle { background: #353535; width: 64px; height: 64px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; margin-bottom: 15px; z-index: 2; }
+        .upload-label { color: var(--text-variant); font-size: 15px; z-index: 2; font-weight: 500; }
+        #file-input { display: none; }
+
+        .section-header { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .section-header .indicator { width: 6px; height: 16px; background: var(--primary); border-radius: 3px; }
+        .section-header h2 { font-size: 12px; color: var(--text-variant); font-weight: 700; letter-spacing: 1px; }
+
+        input, select, textarea { width: 100%; background: var(--input-color); border: none; color: white; padding: 18px 15px; border-radius: 12px; font-size: 16px; outline: none; border: 1.5px solid transparent; transition: all 0.3s ease; }
+        input::placeholder, textarea::placeholder { color: #8E8E93; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); background: #222; }
+        
+        .error-border { border-color: var(--error) !important; background: rgba(255, 85, 69, 0.05) !important; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .submit-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 16px; font-size: 17px; font-weight: 700; cursor: pointer; transition: opacity 0.3s, transform 0.1s; }
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .clear-btn { background: #333; color: var(--text-variant); border: none; width: 100%; padding: 18px; border-radius: 16px; font-size: 17px; font-weight: 700; cursor: pointer; transition: background 0.3s; }
+        .clear-btn:hover { background: #444; color: white; }
+
+        /* Inventory Management Styles */
+        .inventory-list { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+        .inventory-card { background: var(--input-color); border: 1px solid #222; border-radius: 16px; padding: 15px; display: flex; gap: 15px; align-items: center; position: relative; }
+        .inventory-card img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background: #222; }
+        .inventory-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .inventory-info h3 { font-size: 16px; font-weight: 600; color: white; }
+        .inventory-info p { font-size: 13px; color: var(--text-variant); }
+        .inventory-actions { display: flex; gap: 8px; }
+        .icon-btn { background: #252525; border: none; width: 36px; height: 36px; border-radius: 10px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .icon-btn.edit { color: var(--primary); }
+        .icon-btn.delete { color: var(--error); }
+        .icon-btn:hover { background: #333; }
+
+        /* Analytics Tab Styles */
+        .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .stat-card { background: var(--input-color); border: 1px solid #222; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .stat-card h4 { font-size: 12px; color: var(--text-variant); font-weight: 600; letter-spacing: 0.5px; }
+        .stat-card .stat-val { font-size: 24px; font-weight: 700; color: var(--primary); }
+
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 90px; background: rgba(28, 27, 27, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: space-around; align-items: center; padding-bottom: 20px; border-top: 1px solid #222; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-variant); font-size: 11px; font-weight: 500; cursor: pointer; transition: color 0.3s; }
+        .nav-item.active { background: #05b046; color: #002107; padding: 10px 20px; border-radius: 20px; flex-direction: row; font-size: 13px; font-weight: 700; gap: 8px; }
+        .nav-item i { font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- PASSWORD LOCK SCREEN -->
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <h2>Pehramani Studio</h2>
+            <p>Enter password to access admin panel</p>
+            <input type="password" id="auth-password" placeholder="Password">
+            <button class="auth-btn" onclick="verifyPassword()">Unlock</button>
+        </div>
+    </div>
+
+    <header>
+        <h1 id="header-title">Pehramani Entry</h1>
+        <div class="header-actions">
+            <div class="batch-indicator" id="review-batch-btn" onclick="syncBatchToFirebase()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Sync <span id="batch-count">(0)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- TAB 1: ENTRY & EDIT FORM -->
+    <div class="container tab-view active" id="tab-entry">
+        <!-- Native Image Selector -->
+        <label class="image-upload-container" id="upload-box" for="file-input">
+            <div class="upload-icon-circle" id="upload-icon"><i class="fa-solid fa-camera"></i></div>
+            <span class="upload-label" id="upload-text">Tap to add Photo (Required)</span>
+            <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
+            <img id="image-preview" class="preview" src="" alt="Preview">
+        </label>
+
+        <!-- Hidden ID for tracking edits -->
+        <input type="hidden" id="edit-doc-id" value="">
+
+        <div class="section-header">
+            <div class="indicator"></div>
+            <h2>MANDATORY DETAILS</h2>
+        </div>
+
+        <input type="text" id="prod-name" placeholder="Product Name">
+        
+        <div class="grid-2">
+            <input type="number" id="prod-price" placeholder="Price (₹)">
+            <input type="number" id="prod-stock" placeholder="Stock Qty">
+        </div>
+
+        <select id="prod-category">
+            <option value="" disabled selected>Select Category</option>
+            <option value="Indian Earings">Indian Earings</option>
+            <option value="Indian bangles and kadas">Indian Bangles & Kadas</option>
+            <option value="Indian watches">Indian Watches</option>
+            <option value="Indian neckpieces">Indian Neckpieces</option>
+            <option value="Indian Earcuffs">Indian Earcuffs</option>
+            <option value="Western earings">Western Earrings</option>
+            <option value="Western kadas">Western Kadas</option>
+            <option value="Western braclet">Western Bracelet</option>
+            <option value="Western watches">Western Watches</option>
+            <option value="Western Earcuffs">Western Earcuffs</option>
+            <option value="Western neckpieces">Western Neckpieces</option>
+            <option value="Western Anklets">Western Anklets</option>
+            <option value="Western Armcuffs">Western Armcuffs</option>
+        </select>
+
+        <textarea id="prod-desc" placeholder="Description" rows="3"></textarea>
+
+        <div class="section-header">
+            <div class="indicator" style="background: var(--text-variant);"></div>
+            <h2>OPTIONAL DETAILS</h2>
+        </div>
+
+        <div class="grid-2">
+            <select id="prod-material">
+                <option value="" disabled selected>Material</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+                <option value="Platinum">Platinum</option>
+                <option value="Diamond">Diamond</option>
+                <option value="Alloy">Alloy</option>
+                <option value="Brass">Brass</option>
+                <option value="Other">Other</option>
+            </select>
+            <select id="prod-finish">
+                <option value="" disabled selected>Finish</option>
+                <option value="Glossy">Glossy</option>
+                <option value="Matte">Matte</option>
+                <option value="Rose Gold">Rose Gold</option>
+                <option value="Oxidized">Oxidized</option>
+                <option value="Antique">Antique</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <input type="text" id="prod-badge" placeholder="Badge (e.g. New)">
+        <input type="text" id="prod-tags" placeholder="Tags (comma separated)">
+        <input type="text" id="prod-variants" placeholder="Variants (comma separated)">
+
+        <div class="action-row">
+            <button class="clear-btn" onclick="clearForm()">Clear Data</button>
+            <button class="submit-btn" id="add-to-batch-btn" onclick="processProduct()">ADD TO BATCH</button>
+        </div>
+    </div>
+
+    <!-- TAB 2: LIVE INVENTORY -->
+    <div class="container tab-view" id="tab-inventory">
+        <div class="section-header">
+            <div class="indicator"></div>
+            <h2>LIVE STORE INVENTORY</h2>
+        </div>
+        <div class="inventory-list" id="inventory-list-container">
+            <p style="color: var(--text-variant); text-align: center; padding: 30px;">Loading live products...</p>
+        </div>
+    </div>
+
+    <!-- TAB 3: ANALYTICS -->
+    <div class="container tab-view" id="tab-analytics">
+        <div class="section-header">
+            <div class="indicator"></div>
+            <h2>STORE METRICS</h2>
+        </div>
+        <div class="analytics-grid">
+            <div class="stat-card">
+                <h4>Total Items</h4>
+                <div class="stat-val" id="stat-total-items">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Categories</h4>
+                <div class="stat-val" id="stat-total-categories">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Pending Batch</h4>
+                <div class="stat-val" id="stat-pending-batch">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Store Status</h4>
+                <div class="stat-val" style="font-size: 16px; color: var(--secondary); margin-top: 5px;"><i class="fa-solid fa-circle" style="font-size: 10px;"></i> Live Online</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item" id="nav-inventory" onclick="switchTab('inventory')"><i class="fa-solid fa-gem"></i><span>Inventory</span></div>
+        <div class="nav-item active" id="nav-entry" onclick="switchTab('entry')"><i class="fa-solid fa-plus-square"></i><span>Entry</span></div>
+        <div class="nav-item" id="nav-analytics" onclick="switchTab('analytics')"><i class="fa-solid fa-chart-bar"></i><span>Analytics</span></div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 0. PASSWORD PROTECTION
+        // ==========================================
+        if (localStorage.getItem('pehramani_unlocked') === 'true') {
+            document.getElementById('auth-overlay').style.display = 'none';
+        }
+
+        function verifyPassword() {
+            const inputVal = document.getElementById('auth-password').value;
+            if (inputVal === 'Pehramani123@') {
+                localStorage.setItem('pehramani_unlocked', 'true');
+                document.getElementById('auth-overlay').style.display = 'none';
+            } else {
+                alert('Incorrect password!');
+                document.getElementById('auth-password').value = '';
+            }
+        }
+
+        document.getElementById('auth-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
+        // ==========================================
+        // 1. SAFE FIREBASE INITIALIZATION
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDAzMDcP2b7cN7cFRPI2LMV0JaGG1pSmvM",
+            authDomain: "pehramani-jewellery.firebaseapp.com",
+            projectId: "pehramani-jewellery",
+            storageBucket: "pehramani-jewellery.firebasestorage.app",
+            messagingSenderId: "1020807957770",
+            appId: "1:1020807957770:web:3c9ab1196599d64c2bfef3"
+        };
+        
+        let db = null;
+        try {
+            if (Object.keys(firebaseConfig).length > 0) {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                firebase.firestore.setLogLevel('debug');
+            }
+        } catch(e) {
+            console.error("Firebase init skipped:", e);
+        }
+
+        // ==========================================
+        // 2. TAB SWITCHING SYSTEM
+        // ==========================================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            if (tabName === 'entry') {
+                document.getElementById('tab-entry').classList.add('active');
+                document.getElementById('nav-entry').classList.add('active');
+                const isEditing = document.getElementById('edit-doc-id').value;
+                document.getElementById('header-title').innerText = isEditing ? "Edit Product" : "Pehramani Entry";
+            } else if (tabName === 'inventory') {
+                document.getElementById('tab-inventory').classList.add('active');
+                document.getElementById('nav-inventory').classList.add('active');
+                document.getElementById('header-title').innerText = "Store Inventory";
+                loadLiveInventory();
+            } else if (tabName === 'analytics') {
+                document.getElementById('tab-analytics').classList.add('active');
+                document.getElementById('nav-analytics').classList.add('active');
+                document.getElementById('header-title').innerText = "Store Analytics";
+                updateAnalytics();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // 3. GLOBAL STATE & STARTUP
+        // ==========================================
+        let selectedFile = null;
+        let pendingBatch = JSON.parse(localStorage.getItem('savedPendingBatch')) || [];
+        updateBatchUI();
+
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('input', () => el.classList.remove('error-border'));
+            el.addEventListener('change', () => el.classList.remove('error-border'));
+        });
+
+        // ==========================================
+        // 4. IMAGE PREVIEW HANDLING
+        // ==========================================
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            selectedFile = file;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('image-preview');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                
+                document.getElementById('upload-box').classList.remove('error-border');
+                document.getElementById('upload-box').style.border = 'none';
+                document.getElementById('upload-icon').style.display = 'none';
+                document.getElementById('upload-text').style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // ==========================================
+        // 5. DATA VALIDATION, UPLOAD & EDIT LOGIC
+        // ==========================================
+        async function processProduct() {
+            const editId = document.getElementById('edit-doc-id').value;
+            const name = document.getElementById('prod-name');
+            const price = document.getElementById('prod-price');
+            const stock = document.getElementById('prod-stock');
+            const cat = document.getElementById('prod-category');
+            const desc = document.getElementById('prod-desc');
+            const uploadBox = document.getElementById('upload-box');
+            const btn = document.getElementById('add-to-batch-btn');
+
+            let isValid = true;
+            if (!selectedFile && !editId) { uploadBox.classList.add('error-border'); isValid = false; }
+            if (!name.value.trim()) { name.classList.add('error-border'); isValid = false; }
+            if (!price.value || price.value <= 0) { price.classList.add('error-border'); isValid = false; }
+            if (!stock.value || stock.value < 0) { stock.classList.add('error-border'); isValid = false; }
+            if (!cat.value) { cat.classList.add('error-border'); isValid = false; }
+
+            if (!isValid) {
+                alert("Please fill all mandatory fields (highlighted in red) and attach a photo.");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SAVING...';
+            btn.disabled = true;
+
+            try {
+                let imageUrl = document.getElementById('image-preview').src;
+
+                if (selectedFile) {
+                    const formData = new FormData();
+                    formData.append("image", selectedFile);
+                    
+                    const response = await fetch("https://api.imgbb.com/1/upload?key=9c2e05d905aeaaef65833a046b71d5e1", {
+                        method: "POST",
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    if (!data.success) throw new Error("ImgBB API rejected the upload");
+                    imageUrl = data.data.url;
+                }
+
+                const productData = {
+                    name: name.value.trim(),
+                    price: parseInt(price.value),
+                    stock_quantity: parseInt(stock.value),
+                    category: cat.value,
+                    description: desc.value.trim(),
+                    image: imageUrl,
+                    material: document.getElementById('prod-material').value || "",
+                    finish: document.getElementById('prod-finish').value || "",
+                    badge: document.getElementById('prod-badge').value.trim(),
+                    tags: document.getElementById('prod-tags').value.split(',').map(t => t.trim()).filter(t => t !== ""),
+                    variants: document.getElementById('prod-variants').value.split(',').map(v => v.trim()).filter(v => v !== ""),
+                    is_active: true
+                };
+
+                if (editId) {
+                    // Update existing item directly in Firebase
+                    if (db) {
+                        await db.collection("Products").doc(editId).update(productData);
+                        alert("Product updated successfully on live store!");
+                    } else {
+                        alert("Firebase not connected.");
+                    }
+                    clearForm();
+                    switchTab('inventory');
+                } else {
+                    productData.id = "temp_" + Date.now();
+                    productData.created_at = new Date().toISOString();
+
+                    pendingBatch.push(productData);
+                    localStorage.setItem('savedPendingBatch', JSON.stringify(pendingBatch));
+                    
+                    updateBatchUI();
+                    clearForm();
+                    
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> ADDED TO BATCH';
+                    btn.style.backgroundColor = "var(--secondary)";
+                    btn.style.color = "#002107";
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = 'ADD TO BATCH';
+                        btn.style.backgroundColor = "var(--primary)";
+                        btn.style.color = "white";
+                    }, 2000);
+                }
+
+            } catch (error) {
+                alert("Operation failed. Please check your connection.");
+                console.error("Error:", error);
+            } finally {
+                btn.disabled = false;
+                if(btn.innerText.includes("SAVING")) btn.innerText = editId ? "UPDATE PRODUCT" : "ADD TO BATCH";
+            }
+        }
+
+        // ==========================================
+        // 6. SYNC BATCH TO FIREBASE
+        // ==========================================
+        async function syncBatchToFirebase() {
+            if (pendingBatch.length === 0) return;
+            
+            if (!db) {
+                alert("Firebase is not connected yet!");
+                return;
+            }
+
+            const confirmSync = confirm(`Are you sure you want to push ${pendingBatch.length} items to the live store?`);
+            if (!confirmSync) return;
+            
+            const btn = document.getElementById('review-batch-btn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Syncing...';
+            
+            try {
+                const batchWriter = db.batch();
+                
+                pendingBatch.forEach(product => {
+                    const docRef = db.collection("Products").doc();
+                    product.id = docRef.id;
+                    product.created_at = firebase.firestore.FieldValue.serverTimestamp();
+                    batchWriter.set(docRef, product);
+                });
+
+                await batchWriter.commit();
+                
+                pendingBatch = [];
+                localStorage.removeItem('savedPendingBatch');
+                updateBatchUI();
+                alert("Success! All products are now live on the store.");
+                
+            } catch (error) {
+                alert("Failed to sync to database.");
+                console.error(error);
+                updateBatchUI();
+            }
+        }
+
+        // ==========================================
+        // 7. LOAD, EDIT & DELETE LIVE INVENTORY
+        // ==========================================
+        async function loadLiveInventory() {
+            const container = document.getElementById('inventory-list-container');
+            if (!db) {
+                container.innerHTML = '<p style="color: var(--text-variant); text-align: center; padding: 30px;">Firebase not initialized.</p>';
+                return;
+            }
+
+            container.innerHTML = '<p style="color: var(--text-variant); text-align: center; padding: 30px;">Loading live products...</p>';
+
+            try {
+                const snapshot = await db.collection("Products").get();
+                if (snapshot.empty) {
+                    container.innerHTML = '<p style="color: var(--text-variant); text-align: center; padding: 30px;">No live products found in database.</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const item = doc.data();
+                    const docId = doc.id;
+                    
+                    // Escape data safely to pass into inline onclick
+                    const safeItemStr = encodeURIComponent(JSON.stringify(item));
+
+                    const card = document.createElement('div');
+                    card.className = 'inventory-card';
+                    card.innerHTML = `
+                        <img src="${item.image || 'https://via.placeholder.com/70'}" alt="Product">
+                        <div class="inventory-info">
+                            <h3>${item.name || 'Unnamed'}</h3>
+                            <p>₹${item.price} • Stock: ${item.stock_quantity}</p>
+                            <p style="font-size: 11px; color: var(--primary);">${item.category || ''}</p>
+                        </div>
+                        <div class="inventory-actions">
+                            <button class="icon-btn edit" onclick="prepareEdit('${docId}', '${safeItemStr}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="icon-btn delete" onclick="deleteProduct('${docId}')"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = '<p style="color: var(--error); text-align: center; padding: 30px;">Failed to load inventory.</p>';
+                console.error(err);
+            }
+        }
+
+        function prepareEdit(docId, encodedItem) {
+            const item = JSON.parse(decodeURIComponent(encodedItem));
+            
+            document.getElementById('edit-doc-id').value = docId;
+            document.getElementById('prod-name').value = item.name || '';
+            document.getElementById('prod-price').value = item.price || '';
+            document.getElementById('prod-stock').value = item.stock_quantity || '';
+            document.getElementById('prod-category').value = item.category || '';
+            document.getElementById('prod-desc').value = item.description || '';
+            document.getElementById('prod-material').value = item.material || '';
+            document.getElementById('prod-finish').value = item.finish || '';
+            document.getElementById('prod-badge').value = item.badge || '';
+            document.getElementById('prod-tags').value = (item.tags || []).join(', ');
+            document.getElementById('prod-variants').value = (item.variants || []).join(', ');
+
+            if (item.image) {
+                const img = document.getElementById('image-preview');
+                img.src = item.image;
+                img.style.display = 'block';
+                document.getElementById('upload-box').style.border = 'none';
+                document.getElementById('upload-icon').style.display = 'none';
+                document.getElementById('upload-text').style.display = 'none';
+            }
+
+            document.getElementById('add-to-batch-btn').innerText = "UPDATE PRODUCT";
+            switchTab('entry');
+        }
+
+        async function deleteProduct(docId) {
+            if (!confirm("Are you sure you want to delete this product from the live store?")) return;
+            try {
+                await db.collection("Products").doc(docId).delete();
+                loadLiveInventory();
+            } catch (err) {
+                alert("Failed to delete product.");
+                console.error(err);
+            }
+        }
+
+        // ==========================================
+        // 8. ANALYTICS & UI UTILITIES
+        // ==========================================
+        async function updateAnalytics() {
+            document.getElementById('stat-pending-batch').innerText = pendingBatch.length;
+            if (!db) return;
+            try {
+                const snapshot = await db.collection("Products").get();
+                document.getElementById('stat-total-items').innerText = snapshot.size;
+                
+                const cats = new Set();
+                snapshot.forEach(doc => { if (doc.data().category) cats.add(doc.data().category); });
+                document.getElementById('stat-total-categories').innerText = cats.size;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function updateBatchUI() {
+            const btn = document.getElementById('review-batch-btn');
+            if (pendingBatch.length > 0) {
+                btn.style.display = 'block';
+                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Sync (${pendingBatch.length})`;
+            } else {
+                btn.style.display = 'none';
+            }
+            updateAnalytics();
+        }
+
+        function clearForm() {
+            document.getElementById('edit-doc-id').value = '';
+            document.getElementById('add-to-batch-btn').innerText = "ADD TO BATCH";
+            
+            document.querySelectorAll('input, textarea').forEach(el => {
+                if(el.id !== 'auth-password') {
+                    el.value = '';
+                    el.classList.remove('error-border');
+                }
+            });
+            document.querySelectorAll('select').forEach(el => {
+                el.selectedIndex = 0;
+                el.classList.remove('error-border');
+            });
+            
+            selectedFile = null;
+            document.getElementById('image-preview').style.display = 'none';
+            document.getElementById('image-preview').src = '';
+            
+            const uploadBox = document.getElementById('upload-box');
+            uploadBox.style.border = '2px dashed #414755';
+            uploadBox.classList.remove('error-border');
+            
+            document.getElementById('upload-icon').style.display = 'flex';
+            document.getElementById('upload-text').style.display = 'block';
+            
+            document.getElementById('header-title').innerText = "Pehramani Entry";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
