@@ -320,8 +320,7 @@ function renderProductDetail(product) {
                     <div class="spec-line"><strong>Material:</strong> ${escapeHTML(product.material || 'Premium fashion jewellery')}</div>
                 </div>
                 <div class="pdp-actions">
-                    <button class="btn shimmer-btn" onclick="addToCart('${product.id}', true)">Add To Cart</button>
-                    <button class="btn whatsapp-pdp-btn" onclick="checkoutSingleProductWhatsApp('${product.id}')"><i class="fa-brands fa-whatsapp"></i> Buy on WhatsApp</button>
+                    <button class="btn shimmer-btn" style="width: 100%; padding: 16px; font-size: 14px;" onclick="addToCart('${product.id}', true)">Add To Cart</button>
                 </div>
             </div>
         </div>
@@ -526,7 +525,14 @@ window.checkoutWhatsApp = () => {
                 <div style="flex: 1; text-align: right; font-weight: 600;">${itemSubtotal}</div>
             </div>
         `;
-        textInvoiceLines.push(`${index + 1}. ${itemName} (Qty: ${itemQty}) - Subtotal: ${itemSubtotal}`);
+
+        // Detailed text structure for WhatsApp containing Name, Category, Price, Qty, and Image link
+        textInvoiceLines.push(
+            `🔹 *Item ${index + 1}:* ${itemName}\n` +
+            `📂 *Category:* ${itemCategory}\n` +
+            `💰 *Price:* ${itemPrice} x ${itemQty} = ${itemSubtotal}\n` +
+            `🖼️ *Image Link:* ${itemImage}`
+        );
     });
 
     let invoiceIdHeader = cart.length === 1 ? String(cart[0].id || '0000').toUpperCase() : `PEHRA-${Math.random().toString(36).substring(2, 5).toUpperCase()}`;
@@ -541,13 +547,25 @@ window.checkoutWhatsApp = () => {
                 <p><strong>Date:</strong> ${dateString}</p>
                 <hr style="margin:20px 0;">
                 ${receiptRowsHtml}
-                <h3 style="margin-top:20px;">Total: ${totalBalance}</h3>
+                <h3 style="margin-top:20px;">Cart Total: ${totalBalance}</h3>
             </div>
         `;
         document.getElementById('receipt-modal-container').style.display = 'flex';
     }
 
-    const dispatchMessage = `Hello Pehramani,\n\nI have just placed an order!\n\nInvoice: ${invoiceIdHeader}\nTotal: ${totalBalance}\nAddress:\n${locationInput}`;
+    // Formatted message payload containing all requested parameters for WhatsApp
+    const dispatchMessage =
+        `✨ *New Order Placed - Pehramani* ✨\n\n` +
+        `🆔 *Invoice Number:* #${invoiceIdHeader}\n` +
+        `📅 *Date:* ${dateString}\n\n` +
+        `🛍️ *Order Items:*\n\n` +
+        `${textInvoiceLines.join('\n\n-------------------\n\n')}\n\n` +
+        `━━━━━━━━━━━━━━━\n` +
+        `💳 *Cart Total:* ${totalBalance}\n` +
+        `━━━━━━━━━━━━━━━\n\n` +
+        `📍 *Delivery Address:* \n${locationInput}\n\n` +
+        `_Thank you for shopping with Pehramani!_`;
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(dispatchMessage)}`, '_blank');
 };
 

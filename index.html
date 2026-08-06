@@ -394,55 +394,157 @@
     </div>
 
     <!-- UPDATED FOOTER (TIKTOK REMOVED & PROPER ROUTING HOOKS) -->
-    <footer class="mega-footer reveal">
-        <div class="footer-grid">
-            <div>
-                <h3 class="footer-heading" style="font-size: 1.4em; margin-bottom: 15px;">Sign up to our newsletter & enjoy 10% off* your first order.</h3>
-                <p style="font-size: 0.9em; color: #555; margin-bottom: 25px; line-height: 1.6;">Be the first to hear about our newest arrivals, exclusive sales & everything else Pehramani.</p>
-                <form onsubmit="handleNewsletterSubmit(event)" style="display: flex; border-bottom: 2px solid #111; padding-bottom: 8px;">
-                    <input type="email" id="newsletter-email" placeholder="Email address" required style="border: none; background: transparent; outline: none; width: 100%;">
-                    <button type="submit" style="background: transparent; border: none; cursor: pointer; font-size: 1.2em;"><i class="fa-solid fa-arrow-right"></i></button>
-                </form>
-                <div class="footer-social-icons" style="margin-top: 35px;">
-                    <a href="https://instagram.com/pehramani___" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+    <!-- MEGA FOOTER WITH TRUST BADGES & COPYRIGHT LINE -->
+        <footer class="mega-footer reveal" style="border-top: 1px solid #E3DDD4; background-color: #FBF9F5; padding: 70px 6% 30px 6%;">
+            <div class="footer-grid" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; max-width: 1400px; margin: 0 auto; align-items: start;">
+                
+                <!-- COLUMN 1: NEWSLETTER & SOCIALS + PAYMENT BADGES -->
+                <div>
+                    <h3 class="footer-heading" style="font-family: 'Playfair Display', serif; font-size: 1.3em; margin-bottom: 12px; color: #1C1917; font-weight: 500;">Sign up to our newsletter & enjoy 10% off* your first order.</h3>
+                    <p style="font-size: 0.9em; color: #6B6560; margin-bottom: 22px; line-height: 1.6;">Be the first to hear about our newest arrivals, exclusive sales & everything else Pehramani.</p>
+                    
+                    <form onsubmit="handleNewsletterSubmit(event)" style="display: flex; border-bottom: 2px solid #1C1917; padding-bottom: 6px; margin-bottom: 25px;">
+                        <input type="email" id="newsletter-email" placeholder="Email address" required style="border: none; background: transparent; outline: none; width: 100%; font-family: 'Inter', sans-serif; font-size: 14px; color: #1C1917;">
+                        <button type="submit" style="background: transparent; border: none; cursor: pointer; font-size: 1.2em; color: #1C1917;"><i class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+
+                    <!-- Social Media Icons -->
+                    <div class="footer-social-icons" style="margin-bottom: 30px;">
+                        <a href="https://instagram.com/pehramani___" target="_blank" style="color: #1C1917; font-size: 1.2em; margin-right: 18px; transition: color 0.3s;"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" style="color: #1C1917; font-size: 1.2em; margin-right: 18px; transition: color 0.3s;"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" style="color: #1C1917; font-size: 1.2em; transition: color 0.3s;"><i class="fa-brands fa-pinterest-p"></i></a>
+                    </div>
+
+                    <!-- ADDITION #1: Secure Payment & Trust Badges -->
+                    <div style="border-top: 1px solid #E3DDD4; padding-top: 20px;">
+                        <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #9C948B; margin-bottom: 10px; font-weight: 600;">100% Secure Checkout & Support</p>
+                        <div style="display: flex; gap: 12px; font-size: 20px; color: #6B6560; align-items: center;">
+                            <i class="fa-brands fa-whatsapp" title="WhatsApp Secure Orders" style="color: #25D366;"></i>
+                            <i class="fa-solid fa-shield-halved" title="Secure Encryption"></i>
+                            <i class="fa-solid fa-truck-fast" title="Pan India Reliable Shipping"></i>
+                            <span style="font-size: 11px; font-weight: 600; color: #444; border: 1px solid #D1C7BD; padding: 2px 6px; border-radius: 3px; background: #FFF;">UPI / COD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: SHOP CATEGORIES -->
+                <div>
+                    <h4 class="footer-heading" style="font-family: 'Playfair Display', serif; font-size: 1.2em; font-weight: 600; color: #1C1917; margin-bottom: 22px; text-align: center;">Shop</h4>
+                    <ul class="footer-list" id="footer-dynamic-shop-list" style="list-style: none; padding: 0; margin: 0; text-align: center;">
+                        <li><a href="#" onclick="navigateTo('view-shop')" style="color: #6B6560; text-decoration: none; font-size: 0.9em; display: block; margin-bottom: 10px; transition: color 0.2s;">All Collections</a></li>
+                    </ul>
+                </div>
+
+                <!-- COLUMN 3: CUSTOMER CARE & POLICIES -->
+                <div>
+                    <h4 class="footer-heading" style="font-family: 'Playfair Display', serif; font-size: 1.2em; font-weight: 600; color: #1C1917; margin-bottom: 22px; text-align: center;">Customer Care</h4>
+                    <ul class="footer-list" style="list-style: none; padding: 0; margin: 0; text-align: center;">
+                        <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-about')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">About us</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-contact')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Contact Us</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-shipping-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Shipping & Handling</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-refund-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Refund Policy</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-tos')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Terms of Service</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-privacy-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Privacy Policy</a></li>
+                    </ul>
                 </div>
             </div>
-            <div>
-                <h4 class="footer-heading">Shop</h4>
-                <ul class="footer-list" id="footer-dynamic-shop-list">
-                    <li><a href="#" onclick="navigateTo('view-shop')">All Collections</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-heading">Quicklinks</h4>
-                <ul class="footer-list">
-                    <li><a href="#" onclick="navigateTo('view-about')">About us</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Pehramani Journal</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Loyalty</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Careers</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Newsletter Sign Up</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Affiliates and Creators</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Acknowledgement of Country</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-heading">Customer Care</h4>
-                <ul class="footer-list">
-                    <li><a href="#" onclick="navigateTo('view-shop')">Help Centre</a></li>
-                    <li><a href="#" onclick="navigateTo('view-contact')">Contact Us</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Our Boutiques</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Returns Portal</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Recycling Program</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Sizing</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Shipping & Handling</a></li>
-                    <li><a href="#" onclick="navigateTo('view-shop')">Returns & Warranty Policy</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
 
+            <!-- ADDITION #3: Copyright & Studio Location Bar at the Very Bottom -->
+            <div style="max-width: 1400px; margin: 50px auto 0 auto; border-top: 1px solid #E3DDD4; padding-top: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; font-size: 12px; color: #888;">
+                <p style="margin: 0;">© 2026 Pehramani. All rights reserved.</p>
+                <p style="margin: 0; letter-spacing: 0.5px;">Curated with love in Mumbai, India 🇮🇳</p>
+            </div>
+        </footer>
+        <!-- TERMS OF SERVICE PAGE -->
+                <div id="view-tos" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                    <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Terms of Service</h2>
+                    <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Pehramani Legal Policies</p>
+                    <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px;">Welcome to Pehramani</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">Welcome to the Pehramani website. By accessing our site and/or purchasing something from us, you engage in our “Service” and agree to be bound by the following Terms of Service (“Terms”), including any additional terms, conditions, and policies referenced here or available by hyperlink.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Acceptance of Terms</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">By using our website, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree to all the terms and conditions in this agreement, you may not access the website or use any services. We reserve the right to update, change, or replace any part of these Terms by posting updates to our website.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Eligibility and Usage</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">To access and use our site, you must be at least the age of majority in your state or province of residence, or have obtained consent from a parent or guardian. You agree not to use our products or services for any illegal or unauthorized purpose.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Products and Services</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">Certain products or services may be available exclusively online and in limited quantities. We strive to display product colors and images as accurately as possible, but we cannot guarantee that your screen’s display will reflect true colors.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Governing Law</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">These Terms and any separate agreements for services provided by us shall be governed by and construed in accordance with the laws of India.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Contact Information</h3>
+                    <p style="color: #6B6560;">For questions regarding our Terms of Service, please reach out to us at <strong style="color: #1C1917;">pehramani@gmail.com</strong>.</p>
+                </div>
+
+                <!-- SHIPPING POLICY PAGE -->
+                <div id="view-shipping-policy" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                    <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Shipping Policy</h2>
+                    <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Pehramani Logistics</p>
+                    <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
+                    
+                    <p style="color: #6B6560; margin-bottom: 20px;">At Pehramani, we understand the importance of quick and reliable delivery to our valued customers across India.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px;">Order Processing & Timelines</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">All domestic orders are processed swiftly, typically within 2-3 business days. Once dispatched from our Mumbai warehouse, standard delivery takes between <strong>3 to 7 business days</strong> depending on your location.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Shipping Charges</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">We offer <strong>Free Standard Delivery</strong> on all prepaid orders above Rs. 1000. For orders below Rs. 1000, standard delivery charges apply.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Order Tracking</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">When your order ships, we will provide tracking details via WhatsApp or email notification so you can monitor your package's progress.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Questions or Concerns</h3>
+                    <p style="color: #6B6560;">If you have any questions regarding shipping, please contact our support team at <strong style="color: #1C1917;">pehramani@gmail.com</strong> or message us directly on WhatsApp.</p>
+                </div>
+
+                <!-- PRIVACY POLICY PAGE -->
+                <div id="view-privacy-policy" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                    <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Privacy Policy</h2>
+                    <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Last updated: June 2026</p>
+                    <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
+                    
+                    <p style="color: #6B6560; margin-bottom: 20px;">This Privacy Policy describes how <strong>Pehramani</strong> (the "Site", "we", "us", or "our") collects, uses, and discloses your personal information when you visit or make a purchase from our store.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px;">What Personal Information We Collect</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">When you interact with our Site, we collect contact details (name, delivery address, phone number, and email) and order information necessary to fulfill your purchases and coordinate secure WhatsApp checkouts.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">How We Use Your Information</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">We use your personal data to provide our services, process payments, fulfill orders, arrange shipping via our logistics partners, and communicate order updates directly with you.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Contact Us</h3>
+                    <p style="color: #6B6560;">If you have any questions about our privacy practices, please email us at <strong style="color: #1C1917;">pehramani@gmail.com</strong> or visit our Mumbai studio at Colaba Arts District.</p>
+                </div>
+
+                <!-- REFUND POLICY PAGE -->
+                <div id="view-refund-policy" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                    <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Refund & Return Policy</h2>
+                    <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Pehramani Quality Guarantee</p>
+                    <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
+                    
+                    <p style="color: #6B6560; margin-bottom: 20px;">At Pehramani, we strive to ensure customer satisfaction while maintaining clear and consistent policies.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px;">General Return Guidelines</h3>
+                    <ul style="color: #6B6560; padding-left: 20px; line-height: 1.8; margin-bottom: 20px;">
+                        <li>Returns or exchanges are only applicable in cases of defective or damaged products, incorrect items, or missing items.</li>
+                        <li>No returns or exchanges will be entertained for change-of-mind requests or size issues once delivered.</li>
+                        <li>An unboxing video showing the name, address sheet, and invoice is strictly required for reporting any transit damages.</li>
+                    </ul>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Reporting Timeline</h3>
+                    <p style="color: #6B6560; margin-bottom: 20px;">Proof of damage or defect must be emailed to <strong style="color: #1C1917;">pehramani@gmail.com</strong> or messaged via WhatsApp within <strong>24 hours</strong> of receiving your package.</p>
+                    
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4em; margin-bottom: 10px; margin-top: 25px;">Contact Customer Service</h3>
+                    <p style="color: #6B6560;">For any questions regarding returns, reach out to our team at <strong style="color: #1C1917;">pehramani@gmail.com</strong> or WhatsApp <strong style="color: #1C1917;">+91 90820 37084</strong> (Monday to Saturday, 10:00 AM to 7:00 PM IST).</p>
+                </div>
+                
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         const firebaseConfig = {
