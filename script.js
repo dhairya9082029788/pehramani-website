@@ -271,13 +271,33 @@ function generateProductCardHTML(p) {
         ? `<span style="position: absolute; top: 10px; left: 10px; background: #C59B4E; color: #fff; padding: 4px 10px; font-size: 10px; font-weight: bold; border-radius: 2px; z-index: 2; text-transform: uppercase; letter-spacing: 1px;">${escapeHTML(p.badge)}</span>`
         : '';
 
+    // Collect all images for this product
+    const imgList = (p.images && Array.isArray(p.images) && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['https://via.placeholder.com/400x400?text=No+Image']);
+    const hasMultiple = imgList.length > 1;
+
+    const multiBadgeHTML = hasMultiple ? `<div class="genz-multi-badge" id="badge-${p.id}">1/${imgList.length} ✨</div>` : '';
+    const arrowsHTML = hasMultiple ? `
+        <button class="swipe-arrow left" onclick="event.stopPropagation(); slideCardImage('${p.id}', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="swipe-arrow right" onclick="event.stopPropagation(); slideCardImage('${p.id}', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+    ` : '';
+
     const productCategory = p.category || p.Category || 'Jewellery';
+    const jsonImages = encodeURIComponent(JSON.stringify(imgList));
 
     return `
-        <div class="product-card" data-category="${escapeHTML(productCategory.toLowerCase())}" style="position: relative; background: #fff; border: 1px solid #eaeaea; transition: box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="product-card" data-category="${escapeHTML(productCategory.toLowerCase())}" style="position: relative; background: #fff; border: 1px solid #eaeaea; display: flex; flex-direction: column; justify-content: space-between;">
             ${badgeHTML}
-            <div class="product-image-frame" onclick="viewProductDetails('${p.id}')" style="cursor: pointer; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fbfbfb;">
-                <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'">
+            ${multiBadgeHTML}
+            <div class="product-image-frame" 
+                 onclick="viewProductDetails('${p.id}')" 
+                 data-images="${jsonImages}"
+                 data-index="0"
+                 ontouchstart="handleTouchStart(event, '${p.id}')"
+                 ontouchend="handleTouchEnd(event, '${p.id}')"
+                 style="cursor: pointer; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fbfbfb; position: relative;">
+                
+                <img id="card-img-${p.id}" src="${escapeHTML(imgList[0])}" alt="${escapeHTML(p.name)}" class="swipe-img-transition" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'">
+                ${arrowsHTML}
                 <div class="quick-view-overlay">View Details</div>
             </div>
             <div style="padding: 20px 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
@@ -293,6 +313,7 @@ function generateProductCardHTML(p) {
         </div>`;
 }
 
+
 function renderProductDetail(product) {
     const container = document.getElementById('product-detail-container');
     if (!container) return;
@@ -303,7 +324,6 @@ function renderProductDetail(product) {
 
     const productCategory = product.category || product.Category || 'Jewellery';
 
-    // SCENARIO CHECK: Extract images array, fallback to single image string if array is missing or empty
     let productImages = [];
     if (product.images && Array.isArray(product.images) && product.images.length > 0) {
         productImages = product.images;
@@ -313,13 +333,15 @@ function renderProductDetail(product) {
         productImages = ['https://via.placeholder.com/800x800?text=No+Image+Found'];
     }
 
-    // Build thumbnails HTML if there is more than 1 image
+    const hasMultiple = productImages.length > 1;
+    const jsonImages = encodeURIComponent(JSON.stringify(productImages));
+
     let thumbnailsHTML = '';
-    if (productImages.length > 1) {
+    if (hasMultiple) {
         thumbnailsHTML = `
             <div style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px;">
                 ${productImages.map((imgUrl, idx) => `
-                    <div onclick="changeMainPDPImage('${escapeHTML(imgUrl)}', this)"
+                    <div onclick="changeMainPDPImage('${escapeHTML(imgUrl)}', ${idx}, this)"
                          style="width: 70px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: ${idx === 0 ? '2px solid #C59B4E' : '1px solid #E3DDD4'}; flex-shrink: 0; background: #fff; transition: border-color 0.2s;">
                         <img src="${escapeHTML(imgUrl)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/100x100?text=Error'">
                     </div>
@@ -328,12 +350,22 @@ function renderProductDetail(product) {
         `;
     }
 
+    const pdpArrowsHTML = hasMultiple ? `
+        <button class="swipe-arrow left" onclick="slidePDPImage(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="swipe-arrow right" onclick="slidePDPImage(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="genz-multi-badge" id="pdp-badge">1/${productImages.length} 📸</div>
+    ` : '';
+
     container.innerHTML = `
         <button onclick="navigateTo('view-shop')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Collection</button>
-        <div class="pdp-layout">
+        <div class="pdp-layout" data-images="${jsonImages}" data-pdp-index="0">
             <div class="pdp-gallery-wrapper">
-                <div class="pdp-gallery" style="width: 100%; aspect-ratio: 1; overflow: hidden; border: 1px solid #E3DDD4; background-color: white; border-radius: 4px;">
-                    <img id="pdp-main-image" src="${escapeHTML(productImages[0])}" alt="${escapeHTML(product.name)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/800x800?text=Image+Not+Found'">
+                <div class="pdp-gallery" 
+                     ontouchstart="handlePDPTouchStart(event)"
+                     ontouchend="handlePDPTouchEnd(event)"
+                     style="width: 100%; aspect-ratio: 1; overflow: hidden; border: 1px solid #E3DDD4; background-color: white; border-radius: 4px; position: relative;">
+                    <img id="pdp-main-image" src="${escapeHTML(productImages[0])}" alt="${escapeHTML(product.name)}" class="swipe-img-transition" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/800x800?text=Image+Not+Found'">
+                    ${pdpArrowsHTML}
                 </div>
                 ${thumbnailsHTML}
             </div>
@@ -354,6 +386,7 @@ function renderProductDetail(product) {
         </div>
     `;
 }
+
 
 // Gallery thumbnail switcher helper function
 window.changeMainPDPImage = (newSrc, thumbElement) => {
@@ -629,3 +662,129 @@ window.addEventListener('DOMContentLoaded', () => {
     renderCart();
     fetchProducts();
 });
+
+// --- TOUCH & SWIPE GESTURE HANDLERS FOR CARDS & PDP ---
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Card touch gestures (Home / Shop)
+window.handleTouchStart = (e, productId) => {
+    touchStartX = e.changedTouches[0].screenX;
+};
+
+window.handleTouchEnd = (e, productId) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleCardSwipeGesture(productId);
+};
+
+function handleCardSwipeGesture(productId) {
+    const threshold = 40; // minimum distance for swipe
+    if (touchEndX < touchStartX - threshold) {
+        slideCardImage(productId, 1); // Swipe Left -> Next Image
+    } else if (touchEndX > touchStartX + threshold) {
+        slideCardImage(productId, -1); // Swipe Right -> Prev Image
+    }
+}
+
+window.slideCardImage = (productId, direction) => {
+    const frame = document.querySelector(`[data-images][ontouchstart*="${productId}"]`);
+    if (!frame) return;
+
+    const images = JSON.parse(decodeURIComponent(frame.getAttribute('data-images')));
+    let currentIndex = parseInt(frame.getAttribute('data-index') || '0');
+
+    currentIndex += direction;
+    if (currentIndex >= images.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+
+    frame.setAttribute('data-index', currentIndex);
+
+    const imgEl = document.getElementById(`card-img-${productId}`);
+    const badgeEl = document.getElementById(`badge-${productId}`);
+
+    if (imgEl) {
+        imgEl.style.opacity = '0';
+        setTimeout(() => {
+            imgEl.src = images[currentIndex];
+            imgEl.style.opacity = '1';
+        }, 150);
+    }
+    if (badgeEl) {
+        badgeEl.innerText = `${currentIndex + 1}/${images.length} ✨`;
+    }
+};
+
+// PDP (Product Detail Page) touch gestures & navigation
+window.handlePDPTouchStart = (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+};
+
+window.handlePDPTouchEnd = (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const threshold = 40;
+    if (touchEndX < touchStartX - threshold) {
+        slidePDPImage(1);
+    } else if (touchEndX > touchStartX + threshold) {
+        slidePDPImage(-1);
+    }
+};
+
+window.slidePDPImage = (direction) => {
+    const layout = document.querySelector('.pdp-layout[data-images]');
+    if (!layout) return;
+
+    const images = JSON.parse(decodeURIComponent(layout.getAttribute('data-images')));
+    let currentIndex = parseInt(layout.getAttribute('data-pdp-index') || '0');
+
+    currentIndex += direction;
+    if (currentIndex >= images.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+
+    layout.setAttribute('data-pdp-index', currentIndex);
+
+    const mainImg = document.getElementById('pdp-main-image');
+    const badgeEl = document.getElementById('pdp-badge');
+
+    if (mainImg) {
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+            mainImg.src = images[currentIndex];
+            mainImg.style.opacity = '1';
+        }, 150);
+    }
+    if (badgeEl) {
+        badgeEl.innerText = `${currentIndex + 1}/${images.length} 📸`;
+    }
+
+    // Highlight corresponding thumbnail
+    const thumbs = layout.querySelectorAll('.pdp-gallery-wrapper div[onclick]');
+    thumbs.forEach((thumb, idx) => {
+        thumb.style.border = idx === currentIndex ? '2px solid #C59B4E' : '1px solid #E3DDD4';
+    });
+};
+
+window.changeMainPDPImage = (newSrc, index, thumbElement) => {
+    const layout = document.querySelector('.pdp-layout[data-images]');
+    if (layout) layout.setAttribute('data-pdp-index', index);
+
+    const mainImg = document.getElementById('pdp-main-image');
+    if (mainImg) {
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+            mainImg.src = newSrc;
+            mainImg.style.opacity = '1';
+        }, 150);
+    }
+
+    const badgeEl = document.getElementById('pdp-badge');
+    if (badgeEl) {
+        const images = JSON.parse(decodeURIComponent(layout.getAttribute('data-images')));
+        badgeEl.innerText = `${index + 1}/${images.length} 📸`;
+    }
+
+    const allThumbs = thumbElement.parentElement.children;
+    for (let t of allThumbs) {
+        t.style.border = '1px solid #E3DDD4';
+    }
+    thumbElement.style.border = '2px solid #C59B4E';
+};

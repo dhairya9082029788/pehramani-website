@@ -1108,6 +1108,73 @@ footer { background-color: #1C1917; text-align: center; padding: 40px 20px; colo
         display: none !important;
     }
 }
+/* ==========================================================================
+   GEN-Z MULTI-IMAGE GALLERY & SWIPE ANIMATIONS
+   ========================================================================== */
 
+/* Bouncy Pulse Pill for Multi-Image Indicator */
+@keyframes genzPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 155, 78, 0.4); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(197, 155, 78, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 155, 78, 0); }
+}
+
+.genz-multi-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(28, 25, 23, 0.85);
+    backdrop-filter: blur(6px);
+    color: #C59B4E;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    z-index: 3;
+    animation: genzPulse 2.5s infinite ease-in-out;
+    pointer-events: none;
+    border: 1px solid rgba(197, 155, 78, 0.3);
+}
+
+/* Smooth slide transition for image swiping */
+.swipe-img-transition {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+/* Swipe hint arrows on hover for desktop */
+.swipe-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.85);
+    color: #1C1917;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    z-index: 4;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.product-image-frame:hover .swipe-arrow,
+.pdp-gallery:hover .swipe-arrow {
+    opacity: 1;
+}
+
+.swipe-arrow:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: #1C1917;
+    color: #FFF;
+}
+
+.swipe-arrow.left { left: 8px; }
+.swipe-arrow.right { right: 8px; }
 
 ```
