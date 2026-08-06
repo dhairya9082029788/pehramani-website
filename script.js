@@ -303,11 +303,39 @@ function renderProductDetail(product) {
 
     const productCategory = product.category || product.Category || 'Jewellery';
 
+    // SCENARIO CHECK: Extract images array, fallback to single image string if array is missing or empty
+    let productImages = [];
+    if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+        productImages = product.images;
+    } else if (product.image) {
+        productImages = [product.image];
+    } else {
+        productImages = ['https://via.placeholder.com/800x800?text=No+Image+Found'];
+    }
+
+    // Build thumbnails HTML if there is more than 1 image
+    let thumbnailsHTML = '';
+    if (productImages.length > 1) {
+        thumbnailsHTML = `
+            <div style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px;">
+                ${productImages.map((imgUrl, idx) => `
+                    <div onclick="changeMainPDPImage('${escapeHTML(imgUrl)}', this)"
+                         style="width: 70px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: ${idx === 0 ? '2px solid #C59B4E' : '1px solid #E3DDD4'}; flex-shrink: 0; background: #fff; transition: border-color 0.2s;">
+                        <img src="${escapeHTML(imgUrl)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/100x100?text=Error'">
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
     container.innerHTML = `
         <button onclick="navigateTo('view-shop')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Collection</button>
         <div class="pdp-layout">
-            <div class="pdp-gallery">
-                <img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" onerror="this.src='https://via.placeholder.com/800x800?text=Image+Not+Found'">
+            <div class="pdp-gallery-wrapper">
+                <div class="pdp-gallery" style="width: 100%; aspect-ratio: 1; overflow: hidden; border: 1px solid #E3DDD4; background-color: white; border-radius: 4px;">
+                    <img id="pdp-main-image" src="${escapeHTML(productImages[0])}" alt="${escapeHTML(product.name)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/800x800?text=Image+Not+Found'">
+                </div>
+                ${thumbnailsHTML}
             </div>
             <div class="pdp-details">
                 ${product.badge ? `<span class="pdp-badge">${escapeHTML(product.badge)}</span>` : ''}
@@ -319,13 +347,26 @@ function renderProductDetail(product) {
                     <div class="spec-line"><strong>Category:</strong> ${escapeHTML(productCategory)}</div>
                     <div class="spec-line"><strong>Material:</strong> ${escapeHTML(product.material || 'Premium fashion jewellery')}</div>
                 </div>
-                <div class="pdp-actions">
+                <div class="pdp-actions" style="margin-top: 30px;">
                     <button class="btn shimmer-btn" style="width: 100%; padding: 16px; font-size: 14px;" onclick="addToCart('${product.id}', true)">Add To Cart</button>
                 </div>
             </div>
         </div>
     `;
 }
+
+// Gallery thumbnail switcher helper function
+window.changeMainPDPImage = (newSrc, thumbElement) => {
+    const mainImg = document.getElementById('pdp-main-image');
+    if (mainImg) mainImg.src = newSrc;
+
+    // Highlight active thumbnail border
+    const allThumbs = thumbElement.parentElement.children;
+    for (let t of allThumbs) {
+        t.style.border = '1px solid #E3DDD4';
+    }
+    thumbElement.style.border = '2px solid #C59B4E';
+};
 
 function renderCart() {
     const cartItemsContainer = document.getElementById('cart-items');
@@ -433,6 +474,8 @@ window.addToCart = (id, openDrawer = false) => {
     const product = getProductById(id);
     if (!product) return alert('Product is not available right now.');
 
+    const primaryImage = product.image || (product.images && product.images[0]) || '';
+
     const existingItem = cart.find(item => String(item.id) === String(id));
     if (existingItem) {
         existingItem.quantity = Number(existingItem.quantity || 1) + 1;
@@ -441,7 +484,7 @@ window.addToCart = (id, openDrawer = false) => {
             ...product,
             quantity: 1,
             category: product.category || product.Category || 'Jewellery',
-            image: product.image || product.Image || ''
+            image: primaryImage
         });
     }
 
