@@ -43,6 +43,15 @@ function escapeHTML(value = '') {
         .replaceAll("'", '&#039;');
 }
 
+// --- AUTO-CORRECTION MAP FOR OLD DATABASE NAMES ---
+function getCleanCategoryDisplay(rawCat) {
+    if (!rawCat) return 'Jewellery';
+        // Automatically trims and capitalizes the first letter of each word properly
+        return String(rawCat)
+            .trim()
+            .replace(/\b\w/g, char => char.toUpperCase());
+}
+
 // 5. DATA FETCH & SYNCHRONIZATION
 async function fetchProducts() {
     try {
@@ -80,7 +89,7 @@ function syncCartWithLatestProducts() {
             return {
                 ...latestProduct,
                 quantity: cartItem.quantity || 1,
-                category: latestProduct.category || latestProduct.Category || 'Jewellery',
+                category: getCleanCategoryDisplay(latestProduct.category || latestProduct.Category || 'Jewellery'),
                 image: latestProduct.image || latestProduct.Image || ''
             };
         }
@@ -108,23 +117,31 @@ function renderFooterDynamicShopList(list) {
     const footerShopList = document.getElementById('footer-dynamic-shop-list');
     if (!footerShopList || !list || list.length === 0) return;
 
-    const uniqueCategories = new Set();
+    const uniqueCategories = new Map();
+    
     list.forEach(p => {
         const catVal = p.category || p.Category;
-        if (catVal) uniqueCategories.add(catVal.trim());
+        if (catVal !== undefined && catVal !== null && String(catVal).trim() !== "") {
+            const cleanName = getCleanCategoryDisplay(catVal);
+            const lowerKey = cleanName.toLowerCase();
+            
+            if (!uniqueCategories.has(lowerKey)) {
+                uniqueCategories.set(lowerKey, cleanName);
+            }
+        }
     });
 
     let listHtml = `<li><a href="#" onclick="navigateTo('view-shop'); triggerFooterCategoryFilter('all', event)">All Collections</a></li>`;
     
-    uniqueCategories.forEach(cat => {
-        const safeCat = cat.replace(/'/g, "\\'"); // Handles apostrophes safely
-        listHtml += `<li><a href="#" onclick="navigateTo('view-shop'); setTimeout(()=>triggerFooterCategoryFilter('${safeCat}'), 120);">${escapeHTML(cat)}</a></li>`;
+    uniqueCategories.forEach((displayName, lowerKey) => {
+        const safeCat = displayName.replace(/'/g, "\\'");
+        listHtml += `<li><a href="#" onclick="navigateTo('view-shop'); setTimeout(()=>triggerFooterCategoryFilter('${safeCat}'), 120);">${escapeHTML(displayName)}</a></li>`;
     });
 
     footerShopList.innerHTML = listHtml;
 }
 
-// 2. Dedicated trigger that forces both page routing, filtering, AND correct button states
+// Dedicated trigger that forces both page routing, filtering, AND correct button states
 window.triggerFooterCategoryFilter = (categoryName) => {
     const targetCatLower = categoryName.toLowerCase().trim();
     
@@ -134,13 +151,13 @@ window.triggerFooterCategoryFilter = (categoryName) => {
     filterButtons.forEach(btn => {
         const btnText = btn.innerText.toLowerCase().trim();
         if (btnText === targetCatLower || (targetCatLower === 'all' && btnText === 'all')) {
-            // Style as Selected (Black background, white text)
+            // Style as Selected
             btn.style.background = '#111';
             btn.style.color = '#fff';
             btn.style.borderColor = '#111';
             btn.classList.add('target-filter-active');
         } else {
-            // Style as Unselected (White background, black text)
+            // Style as Unselected
             btn.style.background = '#fff';
             btn.style.color = '#111';
             btn.style.borderColor = '#eaeaea';
@@ -160,21 +177,17 @@ window.triggerFooterCategoryFilter = (categoryName) => {
     });
 };
 
-// Helper function that filters products AND visually highlights the matching button at the top
 window.selectCategoryButtonAndFilter = (categoryName) => {
-    // 1. Find all filter buttons at the top of the shop page
     const filterButtons = document.querySelectorAll('.btn-filter');
     
     filterButtons.forEach(btn => {
         const btnText = btn.innerText.toLowerCase().trim();
         if (btnText === categoryName.toLowerCase().trim()) {
-            // Apply active/selected button styling
             btn.style.background = '#111';
             btn.style.color = '#fff';
             btn.style.borderColor = '#111';
             btn.classList.add('target-filter-active');
         } else {
-            // Reset unselected buttons
             btn.style.background = '#fff';
             btn.style.color = '#111';
             btn.style.borderColor = '#eaeaea';
@@ -182,29 +195,33 @@ window.selectCategoryButtonAndFilter = (categoryName) => {
         }
     });
 
-    // 2. Run the product filter logic
     filterCategory(categoryName);
 };
+
 function renderDynamicCategories(list) {
     const categoryGrid = document.querySelector('.category-bubble')?.parentElement?.parentElement;
     if (!categoryGrid || !list || list.length === 0) return;
 
-    const uniqueCategories = {};
+    const uniqueCategories = new Map();
     list.forEach(p => {
         const catVal = p.category || p.Category;
-        if (catVal && !uniqueCategories[catVal.toLowerCase()]) {
-            uniqueCategories[catVal.toLowerCase()] = p.image;
+        if (catVal && String(catVal).trim() !== "") {
+            const cleanName = getCleanCategoryDisplay(catVal);
+            const lowerKey = cleanName.toLowerCase();
+            if (!uniqueCategories.has(lowerKey)) {
+                uniqueCategories.set(lowerKey, { name: cleanName, image: p.image || (p.images && p.images[0]) });
+            }
         }
     });
 
     let dynamicGridHtml = '';
-    Object.keys(uniqueCategories).forEach(cat => {
+    uniqueCategories.forEach((data, lowerKey) => {
         dynamicGridHtml += `
-            <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('${cat}'), 100);">
+            <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('${escapeHTML(lowerKey)}'), 100);">
                 <div class="category-bubble">
-                    <img src="${escapeHTML(uniqueCategories[cat])}" style="object-position: center center;">
+                    <img src="${escapeHTML(data.image || '')}" style="object-position: center center;" onerror="this.src='https://via.placeholder.com/200x200?text=Category'">
                 </div>
-                <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">${cat.toUpperCase()}</span>
+                <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">${escapeHTML(data.name.toUpperCase())}</span>
             </div>
         `;
     });
@@ -218,19 +235,25 @@ function renderDynamicFilterButtons(list) {
     const filterContainer = document.getElementById('dynamic-filter-container');
     if (!filterContainer || !list || list.length === 0) return;
 
-    const uniqueCategories = new Set();
+    const uniqueCategories = new Map();
     list.forEach(p => {
         const catVal = p.category || p.Category;
-        if (catVal) uniqueCategories.add(catVal.trim());
+        if (catVal && String(catVal).trim() !== "") {
+            const cleanName = getCleanCategoryDisplay(catVal);
+            const lowerKey = cleanName.toLowerCase();
+            if (!uniqueCategories.has(lowerKey)) {
+                uniqueCategories.set(lowerKey, cleanName);
+            }
+        }
     });
 
     let buttonsHtml = `
         <button class="btn-filter target-filter-active" onclick="filterCategory('all', event)" style="padding: 10px 24px; background: #111; color: #fff; border: 1px solid #111; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; border-radius: 30px;">ALL</button>
     `;
 
-    uniqueCategories.forEach(cat => {
+    uniqueCategories.forEach((displayName, lowerKey) => {
         buttonsHtml += `
-            <button class="btn-filter" onclick="filterCategory('${escapeHTML(cat.toLowerCase())}', event)" style="padding: 10px 24px; background: #fff; color: #111; border: 1px solid #eaeaea; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; border-radius: 30px;">${escapeHTML(cat.toUpperCase())}</button>
+            <button class="btn-filter" onclick="filterCategory('${escapeHTML(lowerKey)}', event)" style="padding: 10px 24px; background: #fff; color: #111; border: 1px solid #eaeaea; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; border-radius: 30px;">${escapeHTML(displayName.toUpperCase())}</button>
         `;
     });
 
@@ -271,7 +294,6 @@ function generateProductCardHTML(p) {
         ? `<span style="position: absolute; top: 10px; left: 10px; background: #C59B4E; color: #fff; padding: 4px 10px; font-size: 10px; font-weight: bold; border-radius: 2px; z-index: 2; text-transform: uppercase; letter-spacing: 1px;">${escapeHTML(p.badge)}</span>`
         : '';
 
-    // Collect all images for this product
     const imgList = (p.images && Array.isArray(p.images) && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['https://via.placeholder.com/400x400?text=No+Image']);
     const hasMultiple = imgList.length > 1;
 
@@ -281,7 +303,7 @@ function generateProductCardHTML(p) {
         <button class="swipe-arrow right" onclick="event.stopPropagation(); slideCardImage('${p.id}', 1)"><i class="fa-solid fa-chevron-right"></i></button>
     ` : '';
 
-    const productCategory = p.category || p.Category || 'Jewellery';
+    const productCategory = getCleanCategoryDisplay(p.category || p.Category || 'Jewellery');
     const jsonImages = encodeURIComponent(JSON.stringify(imgList));
 
     return `
@@ -313,7 +335,6 @@ function generateProductCardHTML(p) {
         </div>`;
 }
 
-
 function renderProductDetail(product) {
     const container = document.getElementById('product-detail-container');
     if (!container) return;
@@ -322,7 +343,7 @@ function renderProductDetail(product) {
         ? `<span style="text-decoration:line-through; color:#9C948B; font-size:18px; margin-right:10px;">${money(product.price)}</span><span>${money(product.discount_price)}</span>`
         : `<span>${money(getProductPrice(product))}</span>`;
 
-    const productCategory = product.category || product.Category || 'Jewellery';
+    const productCategory = getCleanCategoryDisplay(product.category || product.Category || 'Jewellery');
 
     let productImages = [];
     if (product.images && Array.isArray(product.images) && product.images.length > 0) {
@@ -387,13 +408,25 @@ function renderProductDetail(product) {
     `;
 }
 
+window.changeMainPDPImage = (newSrc, index, thumbElement) => {
+    const layout = document.querySelector('.pdp-layout[data-images]');
+    if (layout) layout.setAttribute('data-pdp-index', index);
 
-// Gallery thumbnail switcher helper function
-window.changeMainPDPImage = (newSrc, thumbElement) => {
     const mainImg = document.getElementById('pdp-main-image');
-    if (mainImg) mainImg.src = newSrc;
+    if (mainImg) {
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+            mainImg.src = newSrc;
+            mainImg.style.opacity = '1';
+        }, 150);
+    }
 
-    // Highlight active thumbnail border
+    const badgeEl = document.getElementById('pdp-badge');
+    if (badgeEl) {
+        const images = JSON.parse(decodeURIComponent(layout.getAttribute('data-images')));
+        badgeEl.innerText = `${index + 1}/${images.length} 📸`;
+    }
+
     const allThumbs = thumbElement.parentElement.children;
     for (let t of allThumbs) {
         t.style.border = '1px solid #E3DDD4';
@@ -488,7 +521,7 @@ window.handleGlobalSearch = (event) => {
     window.navigateTo('view-shop');
     const term = event.target.value.toLowerCase().trim();
     renderShopCatalog(products.filter(p => {
-        const cat = p.category || p.Category || '';
+        const cat = getCleanCategoryDisplay(p.category || p.Category || '');
         const desc = p.description || '';
         return (p.name && p.name.toLowerCase().includes(term)) ||
                (cat.toLowerCase().includes(term)) ||
@@ -516,7 +549,7 @@ window.addToCart = (id, openDrawer = false) => {
         cart.push({
             ...product,
             quantity: 1,
-            category: product.category || product.Category || 'Jewellery',
+            category: getCleanCategoryDisplay(product.category || product.Category || 'Jewellery'),
             image: primaryImage
         });
     }
@@ -583,7 +616,7 @@ window.checkoutWhatsApp = () => {
 
     cart.forEach((item, index) => {
         const dbProduct = products.find(p => String(p.id) === String(item.id)) || item;
-        const itemCategory = String(dbProduct.category || dbProduct.Category || 'Jewellery').trim();
+        const itemCategory = getCleanCategoryDisplay(dbProduct.category || dbProduct.Category || 'Jewellery');
         const itemImage = String(dbProduct.image || dbProduct.Image || '').trim();
         const itemName = String(dbProduct.name || dbProduct.Name || item.name || 'Unnamed Item').trim();
         const itemQty = item.quantity || 1;
@@ -602,7 +635,6 @@ window.checkoutWhatsApp = () => {
             </div>
         `;
 
-        // Detailed text structure for WhatsApp containing Name, Category, Price, Qty, and Image link
         textInvoiceLines.push(
             `🔹 *Item ${index + 1}:* ${itemName}\n` +
             `📂 *Category:* ${itemCategory}\n` +
@@ -629,7 +661,6 @@ window.checkoutWhatsApp = () => {
         document.getElementById('receipt-modal-container').style.display = 'flex';
     }
 
-    // Formatted message payload containing all requested parameters for WhatsApp
     const dispatchMessage =
         `✨ *New Order Placed - Pehramani* ✨\n\n` +
         `🆔 *Invoice Number:* #${invoiceIdHeader}\n` +
@@ -667,7 +698,6 @@ window.addEventListener('DOMContentLoaded', () => {
 let touchStartX = 0;
 let touchEndX = 0;
 
-// Card touch gestures (Home / Shop)
 window.handleTouchStart = (e, productId) => {
     touchStartX = e.changedTouches[0].screenX;
 };
@@ -678,11 +708,11 @@ window.handleTouchEnd = (e, productId) => {
 };
 
 function handleCardSwipeGesture(productId) {
-    const threshold = 40; // minimum distance for swipe
+    const threshold = 40;
     if (touchEndX < touchStartX - threshold) {
-        slideCardImage(productId, 1); // Swipe Left -> Next Image
+        slideCardImage(productId, 1);
     } else if (touchEndX > touchStartX + threshold) {
-        slideCardImage(productId, -1); // Swipe Right -> Prev Image
+        slideCardImage(productId, -1);
     }
 }
 
@@ -714,7 +744,6 @@ window.slideCardImage = (productId, direction) => {
     }
 };
 
-// PDP (Product Detail Page) touch gestures & navigation
 window.handlePDPTouchStart = (e) => {
     touchStartX = e.changedTouches[0].screenX;
 };
@@ -756,35 +785,8 @@ window.slidePDPImage = (direction) => {
         badgeEl.innerText = `${currentIndex + 1}/${images.length} 📸`;
     }
 
-    // Highlight corresponding thumbnail
     const thumbs = layout.querySelectorAll('.pdp-gallery-wrapper div[onclick]');
     thumbs.forEach((thumb, idx) => {
         thumb.style.border = idx === currentIndex ? '2px solid #C59B4E' : '1px solid #E3DDD4';
     });
-};
-
-window.changeMainPDPImage = (newSrc, index, thumbElement) => {
-    const layout = document.querySelector('.pdp-layout[data-images]');
-    if (layout) layout.setAttribute('data-pdp-index', index);
-
-    const mainImg = document.getElementById('pdp-main-image');
-    if (mainImg) {
-        mainImg.style.opacity = '0';
-        setTimeout(() => {
-            mainImg.src = newSrc;
-            mainImg.style.opacity = '1';
-        }, 150);
-    }
-
-    const badgeEl = document.getElementById('pdp-badge');
-    if (badgeEl) {
-        const images = JSON.parse(decodeURIComponent(layout.getAttribute('data-images')));
-        badgeEl.innerText = `${index + 1}/${images.length} 📸`;
-    }
-
-    const allThumbs = thumbElement.parentElement.children;
-    for (let t of allThumbs) {
-        t.style.border = '1px solid #E3DDD4';
-    }
-    thumbElement.style.border = '2px solid #C59B4E';
 };
