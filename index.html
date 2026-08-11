@@ -155,249 +155,257 @@
     </header>
 
     <div id="page-content">
-            
-            <div class="hero-section reveal" style="height: 500px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 0 5% 20px 5%; text-align: center; background: url('https://i.ibb.co/v4Mv8yJG/Gemini-Generated-Image-ae6g2eae6g2eae6g.png') center/cover no-repeat; border-bottom: 1px solid #eaeaea; border-radius: 4px;">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 3.5em; color: #111; margin-bottom: 5px;">Wear your worth.</h2>
-
-                <button onclick="navigateTo('view-shop')" style="background: #111; color: #fff; padding: 16px 60px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">
-                    Shop The Collection
-                </button>
-            </div>
-            
-            <!-- SHOP BY CATEGORY -->
-            <div class="reveal" style="padding: 25px 5%; text-align: center; border-bottom: 1px solid #eaeaea;">
-                <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 50px;">Shop By Category</h3>
-                <div class="horizontal-scroll-row" style="gap: 40px;">
-                    
-                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('earrings', {currentTarget: document.querySelectorAll('.btn-filter')[1]}), 100);">
-                        <div class="category-bubble">
-                            <img src="https://i.ibb.co/dsXM7CLY/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg" style="object-position: center 60%;">
-                        </div>
-                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">EARRINGS</span>
-                    </div>
-                    
-                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('rings', {currentTarget: document.querySelectorAll('.btn-filter')[2]}), 100);">
-                        <div class="category-bubble">
-                            <img src="https://i.ibb.co/Df1cLDs7/image.jpg" style="object-position: center center;">
-                        </div>
-                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">RINGS</span>
-                    </div>
-                    
-                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('necklaces', {currentTarget: document.querySelectorAll('.btn-filter')[4]}), 100);">
-                        <div class="category-bubble">
-                            <img src="https://i.ibb.co/VcWY2gvm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg" style="object-position: center 75%;">
-                        </div>
-                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">NECKLACES</span>
-                    </div>
-                    
-                    <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('bracelets', {currentTarget: document.querySelectorAll('.btn-filter')[3]}), 100);">
-                        <div class="category-bubble">
-                            <img src="https://i.ibb.co/s96wk4d4/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg" style="object-position: center center;">
-                        </div>
-                        <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">BRACELETS</span>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- FEATURED BESTSELLERS -->
-            <div class="reveal" style="padding: 40px 5%;">
-                <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">Featured Bestsellers</h3>
-                <div id="home-featured-grid" class="product-grid horizontal-scroll-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; justify-content: center;"></div>
-            </div>
-    
-            <!-- WATCH THE SPARKLE IN ACTION (MP4 VIDEO CARDS SECTION) -->
-            <div class="reveal" style="padding: 40px 5%; background: #fff; border-bottom: 1px solid #eaeaea;">
-                <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">See Pehramani in Motion</h3>
-                <div class="horizontal-scroll-row" style="gap: 20px;">
-                    <!-- Video Card 1 -->
-                    <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <video src="https://jewelva.in/cdn/shop/videos/c/vp/cd4b420f706f42a0bf4aadcc4440ed29/cd4b420f706f42a0bf4aadcc4440ed29.HD-1080p-7.2Mbps-46090683.mp4?v=0" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
-                    </div>
-                    <!-- Video Card 2 -->
-                    <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <video src="https://jewelva.in/cdn/shop/videos/c/vp/36b8c5f74735430b871568a488aa0639/36b8c5f74735430b871568a488aa0639.HD-1080p-7.2Mbps-46090665.mp4?v=0" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
-                    </div>
-                    <!-- Video Card 3 -->
-                    <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <video src="https://jewelva.in/cdn/shop/videos/c/vp/e4bf970fa90143c59d95d07aacb8231f/e4bf970fa90143c59d95d07aacb8231f.HD-1080p-7.2Mbps-46090687.mp4?v=0" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
-                    </div>
-                    <!-- Video Card 4 -->
-                    <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <video src="https://jewelva.in/cdn/shop/videos/c/vp/b002f10a119b465f842ff52db5df5c88/b002f10a119b465f842ff52db5df5c88.HD-1080p-7.2Mbps-46090681.mp4?v=0%22%20type=%22video/mp4" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TRUST BADGES -->
-            <div class="reveal" style="background: #fbfbfb; padding: 80px 5%; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; max-width: 1200px; margin: 0 auto;">
-                    <div class="trust-badge-container">
-                        <i class="fa-solid fa-truck-fast trust-badge-icon"></i>
-                        <h4 style="margin-bottom:10px; font-weight:600;">Pan India Shipping</h4>
-                        <p style="font-size:0.85em; color:#555;">Fast & reliable delivery across the country.</p>
-                    </div>
-                    <div class="trust-badge-container">
-                        <i class="fa-solid fa-box-open trust-badge-icon"></i>
-                        <h4 style="margin-bottom:10px; font-weight:600;">Free Standard Delivery</h4>
-                        <p style="font-size:0.85em; color:#555;">On all orders above Rs. 1499.</p>
-                    </div>
-                    <div class="trust-badge-container">
-                        <i class="fa-solid fa-lock trust-badge-icon"></i>
-                        <h4 style="margin-bottom:10px; font-weight:600;">Secure Checkout</h4>
-                        <p style="font-size:0.85em; color:#555;">100% secure payment gateway integration.</p>
-                    </div>
-                    <div class="trust-badge-container">
-                        <i class="fa-solid fa-gem trust-badge-icon"></i>
-                        <h4 style="margin-bottom:10px; font-weight:600;">Premium Quality</h4>
-                        <p style="font-size:0.85em; color:#555;">Anti-tarnish, skin-friendly statement pieces.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LOVED BY OUR CLIENTS -->
-            <div class="reveal" style="padding: 40px 5%; background: #fff; overflow: hidden;">
-                <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">Loved by Our Clients</h3>
-                <div class="horizontal-scroll-row">
-                    <div class="testimonial-card reveal">
-                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Obsessed with the Hoops!</h4>
-                        <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"The weight and finish on these earrings are incredible. They look so much more expensive than they are."</p>
-                        <p style="font-weight: 600; font-size: 0.85em;">- Aisha R.</p>
-                    </div>
-                    <div class="testimonial-card reveal">
-                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Perfect Statement Piece</h4>
-                        <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"I bought the layered choker for a wedding and got so many compliments. Customer service was also very helpful."</p>
-                        <p style="font-weight: 600; font-size: 0.85em;">- Priyanka S.</p>
-                    </div>
-                    <div class="testimonial-card reveal">
-                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Amazing Quality</h4>
-                        <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"Fast delivery to Bangalore and the packaging was beautiful. The anti-tarnish promise is real."</p>
-                        <p style="font-weight: 600; font-size: 0.85em;">- Meera K.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FOLLOW US ON INSTAGRAM -->
-            <div class="reveal" style="padding: 0 5% 40px 5%; text-align: center;">
-                <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 10px;">Follow Us on Instagram</h3>
-                <p style="color: #C59B4E; margin-bottom: 40px; font-weight: 600;"><a href="https://instagram.com/pehramani___" target="_blank" style="color: inherit; text-decoration: none;">@pehramani___</a></p>
                 
-                <div class="ig-grid" id="instagram-live-grid">
-                    <!-- Fallback Images -->
-                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
-                        <img src="https://i.ibb.co/rX0fFtm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg" style="object-position: center 60%;" alt="Pehramani Earrings">
-                    </div>
-                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
-                        <img src="https://i.ibb.co/ymMbJkJd/image.jpg" style="object-position: center center;" alt="Pehramani Rings">
-                    </div>
-                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
-                        <img src="https://i.ibb.co/Txhh1T7J/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg" style="object-position: center 75%;" alt="Pehramani Necklace">
-                    </div>
-                    <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
-                        <img src="https://i.ibb.co/8DC7S3x6/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg" style="object-position: center center;" alt="Pehramani Bracelet">
-                    </div>
+            <!-- WRAPPER ADDED HERE: Groups all home content together so navigation works perfectly -->
+            <div id="view-home" class="view-section active">
+
+                <div class="hero-section reveal" style="height: 500px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 0 5% 20px 5%; text-align: center; background: url('https://i.ibb.co/v4Mv8yJG/Gemini-Generated-Image-ae6g2eae6g2eae6g.png') center/cover no-repeat; border-bottom: 1px solid #eaeaea; border-radius: 4px;">
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 3.5em; color: #111; margin-bottom: 5px;">Wear your worth.</h2>
+
+                    <button onclick="navigateTo('view-shop')" style="background: #111; color: #fff; padding: 16px 60px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">
+                        Shop The Collection
+                    </button>
                 </div>
-            </div>
-            
-        </div>
-
-        <div id="view-shop" class="view-section reveal" style="display: none;">
-            <h2 style="text-align: center; margin: 60px 0 40px 0; font-family: 'Playfair Display', serif; font-size: 2.5em;">Our Curated Collection</h2>
-            <div id="dynamic-filter-container" class="filter-container" style="text-align: center; margin-bottom: 50px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                <button class="btn-filter target-filter-active" onclick="filterCategory('all', event)" style="padding: 10px 24px; background: #111; color: #fff; border: 1px solid #111; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; border-radius: 30px;">ALL</button>
-            </div>
-            <div id="shop-catalog-grid" class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; padding: 0 5% 80px 5%; justify-content: center;"></div>
-        </div>
-
-        <div id="view-product-detail" class="view-section reveal" style="display: none;">
-            <div id="product-detail-container" class="pdp-container"></div>
-        </div>
-
-        <!-- ABOUT / OUR STORY VIEW -->
-        <div id="view-about" class="view-section reveal" style="display: none;">
-            <div style="padding: 100px 5%; max-width: 1200px; margin: 0 auto;">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; text-align: center; margin-bottom: 60px;">Our Story</h2>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
-                    <div style="width: 100%; aspect-ratio: 4/5; overflow: hidden; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-                        <img src="https://i.ibb.co/gLRP30Q9/Gemini-Generated-Image-urx73vurx73vurx7-ezremove.png" alt="Pehramani Legacy" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    
-                    <div style="background: #fbfbfb; padding: 50px; line-height: 1.8; color: #444; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-                        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em; color: #111; margin-bottom: 20px;">The Art of Adornment</h3>
+                <!-- SHOP BY CATEGORY -->
+                <div class="reveal" style="padding: 25px 5%; text-align: center; border-bottom: 1px solid #eaeaea;">
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 50px;">Shop By Category</h3>
+                    <div class="horizontal-scroll-row" style="gap: 40px;">
                         
-                        <p style="margin-bottom: 20px; font-size: 1.1em;">
-                            The brand name <strong style="color:#C59B4E;">Pehramani</strong> fundamentally means <strong style="color:#C59B4E;">to adorn</strong>. It is rooted deeply in the core belief that adornment is far more than just decoration—it is an essential form of identity, memory, and personal power.
-                        </p>
+                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('earrings', {currentTarget: document.querySelectorAll('.btn-filter')[1]}), 100);">
+                            <div class="category-bubble">
+                                <img src="https://i.ibb.co/dsXM7CLY/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg" style="object-position: center 60%;">
+                            </div>
+                            <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">EARRINGS</span>
+                        </div>
                         
-                        <p style="margin-bottom: 20px; font-size: 1.1em;">
-                            Born in the heart of Mumbai, Pehramani was inspired by vivid childhood memories of a mother’s jewellery box, where every single piece held a unique story or a specific moment in time. We observed a gap between soulful, high-quality craftsmanship and accessible everyday pricing. Pehramani was established to bridge that divide.
-                        </p>
+                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('rings', {currentTarget: document.querySelectorAll('.btn-filter')[2]}), 100);">
+                            <div class="category-bubble">
+                                <img src="https://i.ibb.co/Df1cLDs7/image.jpg" style="object-position: center center;">
+                            </div>
+                            <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">RINGS</span>
+                        </div>
                         
-                        <p style="margin-bottom: 20px; font-size: 1.1em;">
-                            We travel directly through the vibrant, bustling fashion lanes of India, collaborating with passionate local artisans to hand-select intention-driven designs. From heavy geometric gold hoops that demand attention to delicate, minimalist sterling bands, our collections are curated for the modern wearer who uses style as a fearless canvas.
-                        </p>
+                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('necklaces', {currentTarget: document.querySelectorAll('.btn-filter')[4]}), 100);">
+                            <div class="category-bubble">
+                                <img src="https://i.ibb.co/VcWY2gvm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg" style="object-position: center 75%;">
+                            </div>
+                            <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">NECKLACES</span>
+                        </div>
                         
-                        <p style="font-size: 1.1em; font-weight: 500; font-style: italic; color: #111;">
-                            We don't just sell jewellery; we curate confidence.
-                        </p>
+                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('bracelets', {currentTarget: document.querySelectorAll('.btn-filter')[3]}), 100);">
+                            <div class="category-bubble">
+                                <img src="https://i.ibb.co/s96wk4d4/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg" style="object-position: center center;">
+                            </div>
+                            <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">BRACELETS</span>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div id="view-contact" class="view-section reveal" style="display: none;">
-            <div style="padding: 100px 5%; max-width: 1000px; margin: 0 auto; text-align: center;">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; margin-bottom: 50px;">Contact HQs</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; text-align: left;">
-                    <div style="background: #fbfbfb; padding: 40px; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
-                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #111;">Get in Touch</h3>
-                        <p style="margin-bottom: 15px; color: #555;"><i class="fa-solid fa-envelope" style="color:#C59B4E; width: 25px;"></i> pehramani@gmail.com</p>
-                        <p style="margin-bottom: 15px; color: #555;"><i class="fa-solid fa-phone" style="color:#C59B4E; width: 25px;"></i> +91 90820 37084</p>
-                        <p style="margin-bottom: 30px; color: #555;"><i class="fa-solid fa-clock" style="color:#C59B4E; width: 25px;"></i> Mon - Sat, 10:00 AM - 7:00 PM (IST)</p>
-                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #111; margin-top: 40px;">Studio Location</h3>
-                        <p style="color: #555; line-height: 1.6;">101, Jay Kiran Plaza<br> Temba road lane, Bhayandar West,<br>Thane, Maharashtra 401101<br>India</p>
-                        <div class="map-container" style="width: 100%; height: 250px; margin-top: 20px; border-radius: 4px; overflow: hidden;">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1526.4344027361678!2d72.84214518473559!3d19.296981502986814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e0!4m0!4m5!1s0x3be7b1c0c0e9a669%3A0x7f2231fce175c8dc!2s7RWV%2BQ5X%20Jay%20kiran%20plaza%2C%20Swami%20Satyanand%20Maharaj%20Rd%2C%20Bhayandar%2C%20Mohammed%20Colony%2C%20Bhayandar%20West%2C%20Mira%20Bhayandar%2C%20Maharashtra%20401101%2C%20India!3m2!1d19.2970115!2d72.8429963!5e0!3m2!1sen!2sus!4v1785916681605!5m2!1sen!2sus" style="width: 100%; height: 100%; border: 0; filter: grayscale(100%) contrast(1.1);" allowfullscreen="" loading="lazy"></iframe>
+    <!--            <div class="blob-shape" style="width: 180px; height: 180px; margin: 0 auto;">-->
+    <!--                <img src="https://i.ibb.co/dsXM7CLY/Modern-Bridal-Pearl-Earrings.jpg" alt="Gift Hamper">-->
+    <!--            </div>-->
+                
+                <!-- FEATURED BESTSELLERS -->
+                <div class="reveal" style="padding: 40px 5%;">
+                    <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">Featured Bestsellers</h3>
+                    <div id="home-featured-grid" class="product-grid horizontal-scroll-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; justify-content: center;"></div>
+                </div>
+            
+        
+                <!-- WATCH THE SPARKLE IN ACTION (MP4 VIDEO CARDS SECTION) -->
+                <div class="reveal" style="padding: 40px 5%; background: #fff; border-bottom: 1px solid #eaeaea;">
+                    <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">See Pehramani in Motion</h3>
+                    <div class="horizontal-scroll-row" style="gap: 20px;">
+                        <!-- Video Card 1 -->
+                        <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <video src="https://jewelva.in/cdn/shop/videos/c/vp/cd4b420f706f42a0bf4aadcc4440ed29/cd4b420f706f42a0bf4aadcc4440ed29.HD-1080p-7.2Mbps-46090683.mp4?v=0" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
+                        </div>
+                        <!-- Video Card 2 -->
+                        <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <video src="https://jewelva.in/cdn/shop/videos/c/vp/36b8c5f74735430b871568a488aa0639/36b8c5f74735430b871568a488aa0639.HD-1080p-7.2Mbps-46090665.mp4?v=0" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
+                        </div>
+                        <!-- Video Card 3 -->
+                        <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <video src="https://jewelva.in/cdn/shop/videos/c/vp/e4bf970fa90143c59d95d07aacb8231f/e4bf970fa90143c59d95d07aacb8231f.HD-1080p-7.2Mbps-46090687.mp4?v=0" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
+                        </div>
+                        <!-- Video Card 4 -->
+                        <div style="width: 300px; aspect-ratio: 9/16; background: #eaeaea; border-radius: 12px; overflow: hidden; position: relative; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <video src="https://jewelva.in/cdn/shop/videos/c/vp/b002f10a119b465f842ff52db5df5c88/b002f10a119b465f842ff52db5df5c88.HD-1080p-7.2Mbps-46090681.mp4?v=0%22%20type=%22video/mp4" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
                         </div>
                     </div>
-                    <div style="background: #fff; border: 1px solid #eaeaea; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 25px; color: #111;">Send a Message</h3>
-                        <form onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();" style="display: flex; flex-direction: column; gap: 20px;">
-                            <input type="text" placeholder="Your Name" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'">
-                            <input type="email" placeholder="Your Email" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'">
-                            <textarea placeholder="Your Message" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; height: 150px; resize: vertical; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'"></textarea>
-                            <button type="submit" style="background: #111; color: #fff; padding: 18px; border: none; cursor: pointer; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; border-radius: 4px;">Send Message</button>
+                </div>
+
+                <!-- TRUST BADGES -->
+                <div class="reveal" style="background: #fbfbfb; padding: 80px 5%; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; max-width: 1200px; margin: 0 auto;">
+                        <div class="trust-badge-container">
+                            <i class="fa-solid fa-truck-fast trust-badge-icon"></i>
+                            <h4 style="margin-bottom:10px; font-weight:600;">Pan India Shipping</h4>
+                            <p style="font-size:0.85em; color:#555;">Fast & reliable delivery across the country.</p>
+                        </div>
+                        <div class="trust-badge-container">
+                            <i class="fa-solid fa-box-open trust-badge-icon"></i>
+                            <h4 style="margin-bottom:10px; font-weight:600;">Free Standard Delivery</h4>
+                            <p style="font-size:0.85em; color:#555;">On all orders above Rs. 1499.</p>
+                        </div>
+                        <div class="trust-badge-container">
+                            <i class="fa-solid fa-lock trust-badge-icon"></i>
+                            <h4 style="margin-bottom:10px; font-weight:600;">Secure Checkout</h4>
+                            <p style="font-size:0.85em; color:#555;">100% secure payment gateway integration.</p>
+                        </div>
+                        <div class="trust-badge-container">
+                            <i class="fa-solid fa-gem trust-badge-icon"></i>
+                            <h4 style="margin-bottom:10px; font-weight:600;">Premium Quality</h4>
+                            <p style="font-size:0.85em; color:#555;">Anti-tarnish, skin-friendly statement pieces.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LOVED BY OUR CLIENTS -->
+                <div class="reveal" style="padding: 40px 5%; background: #fff; overflow: hidden;">
+                    <h3 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 40px;">Loved by Our Clients</h3>
+                    <div class="horizontal-scroll-row">
+                        <div class="testimonial-card reveal">
+                            <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                            <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Obsessed with the Hoops!</h4>
+                            <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"The weight and finish on these earrings are incredible. They look so much more expensive than they are."</p>
+                            <p style="font-weight: 600; font-size: 0.85em;">- Aisha R.</p>
+                        </div>
+                        <div class="testimonial-card reveal">
+                            <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                            <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Perfect Statement Piece</h4>
+                            <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"I bought the layered choker for a wedding and got so many compliments. Customer service was also very helpful."</p>
+                            <p style="font-weight: 600; font-size: 0.85em;">- Priyanka S.</p>
+                        </div>
+                        <div class="testimonial-card reveal">
+                            <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                            <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2em; margin-bottom: 10px;">Amazing Quality</h4>
+                            <p style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">"Fast delivery to Bangalore and the packaging was beautiful. The anti-tarnish promise is real."</p>
+                            <p style="font-weight: 600; font-size: 0.85em;">- Meera K.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOLLOW US ON INSTAGRAM -->
+                <div class="reveal" style="padding: 0 5% 40px 5%; text-align: center;">
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 10px;">Follow Us on Instagram</h3>
+                    <p style="color: #C59B4E; margin-bottom: 40px; font-weight: 600;"><a href="https://instagram.com/pehramani___" target="_blank" style="color: inherit; text-decoration: none;">@pehramani___</a></p>
+                    
+                    <div class="ig-grid" id="instagram-live-grid">
+                        <!-- Fallback Images -->
+                        <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                            <img src="https://i.ibb.co/rX0fFtm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg" style="object-position: center 60%;" alt="Pehramani Earrings">
+                        </div>
+                        <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                            <img src="https://i.ibb.co/ymMbJkJd/image.jpg" style="object-position: center center;" alt="Pehramani Rings">
+                        </div>
+                        <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                            <img src="https://i.ibb.co/Txhh1T7J/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg" style="object-position: center 75%;" alt="Pehramani Necklace">
+                        </div>
+                        <div class="ig-post reveal" onclick="window.open('https://instagram.com/pehramani___', '_blank')">
+                            <img src="https://i.ibb.co/8DC7S3x6/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg" style="object-position: center center;" alt="Pehramani Bracelet">
+                        </div>
+                    </div>
+                </div>
+                
+            </div> <!-- CLOSING TAG ADDED HERE: Ends the home view wrapper -->
+
+            <div id="view-shop" class="view-section reveal" style="display: none;">
+                <h2 style="text-align: center; margin: 60px 0 40px 0; font-family: 'Playfair Display', serif; font-size: 2.5em;">Our Curated Collection</h2>
+                <div id="dynamic-filter-container" class="filter-container" style="text-align: center; margin-bottom: 50px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn-filter target-filter-active" onclick="filterCategory('all', event)" style="padding: 10px 24px; background: #111; color: #fff; border: 1px solid #111; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; border-radius: 30px;">ALL</button>
+                </div>
+                <div id="shop-catalog-grid" class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; padding: 0 5% 80px 5%; justify-content: center;"></div>
+            </div>
+
+            <div id="view-product-detail" class="view-section reveal" style="display: none;">
+                <div id="product-detail-container" class="pdp-container"></div>
+            </div>
+
+            <!-- ABOUT / OUR STORY VIEW -->
+            <div id="view-about" class="view-section reveal" style="display: none;">
+                <div style="padding: 100px 5%; max-width: 1200px; margin: 0 auto;">
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; text-align: center; margin-bottom: 60px;">Our Story</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+                        <div style="width: 100%; aspect-ratio: 4/5; overflow: hidden; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+                            <img src="https://i.ibb.co/gLRP30Q9/Gemini-Generated-Image-urx73vurx73vurx7-ezremove.png" alt="Pehramani Legacy" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        
+                        <div style="background: #fbfbfb; padding: 50px; line-height: 1.8; color: #444; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+                            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em; color: #111; margin-bottom: 20px;">The Art of Adornment</h3>
+                            
+                            <p style="margin-bottom: 20px; font-size: 1.1em;">
+                                The brand name <strong style="color:#C59B4E;">Pehramani</strong> fundamentally means <strong style="color:#C59B4E;">to adorn</strong>. It is rooted deeply in the core belief that adornment is far more than just decoration—it is an essential form of identity, memory, and personal power.
+                            </p>
+                            
+                            <p style="margin-bottom: 20px; font-size: 1.1em;">
+                                Born in the heart of Mumbai, Pehramani was inspired by vivid childhood memories of a mother’s jewellery box, where every single piece held a unique story or a specific moment in time. We observed a gap between soulful, high-quality craftsmanship and accessible everyday pricing. Pehramani was established to bridge that divide.
+                            </p>
+                            
+                            <p style="margin-bottom: 20px; font-size: 1.1em;">
+                                We travel directly through the vibrant, bustling fashion lanes of India, collaborating with passionate local artisans to hand-select intention-driven designs. From heavy geometric gold hoops that demand attention to delicate, minimalist sterling bands, our collections are curated for the modern wearer who uses style as a fearless canvas.
+                            </p>
+                            
+                            <p style="font-size: 1.1em; font-weight: 500; font-style: italic; color: #111;">
+                                We don't just sell jewellery; we curate confidence.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-contact" class="view-section reveal" style="display: none;">
+                <div style="padding: 100px 5%; max-width: 1000px; margin: 0 auto; text-align: center;">
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; margin-bottom: 50px;">Contact HQs</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; text-align: left;">
+                        <div style="background: #fbfbfb; padding: 40px; border: 1px solid #eaeaea; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #111;">Get in Touch</h3>
+                            <p style="margin-bottom: 15px; color: #555;"><i class="fa-solid fa-envelope" style="color:#C59B4E; width: 25px;"></i> pehramani@gmail.com</p>
+                            <p style="margin-bottom: 15px; color: #555;"><i class="fa-solid fa-phone" style="color:#C59B4E; width: 25px;"></i> +91 90820 37084</p>
+                            <p style="margin-bottom: 30px; color: #555;"><i class="fa-solid fa-clock" style="color:#C59B4E; width: 25px;"></i> Mon - Sat, 10:00 AM - 7:00 PM (IST)</p>
+                            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #111; margin-top: 40px;">Studio Location</h3>
+                            <p style="color: #555; line-height: 1.6;">101, Jay Kiran Plaza<br> Temba road lane, Bhayandar West,<br>Thane, Maharashtra 401101<br>India</p>
+                            <div class="map-container" style="width: 100%; height: 250px; margin-top: 20px; border-radius: 4px; overflow: hidden;">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1526.4344027361678!2d72.84214518473559!3d19.296981502986814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e0!4m0!4m5!1s0x3be7b1c0c0e9a669%3A0x7f2231fce175c8dc!2s7RWV%2BQ5X%20Jay%20kiran%20plaza%2C%20Swami%20Satyanand%20Maharaj%20Rd%2C%20Bhayandar%2C%20Mohammed%20Colony%2C%20Bhayandar%20West%2C%20Mira%20Bhayandar%2C%20Maharashtra%20401101%2C%20India!3m2!1d19.2970115!2d72.8429963!5e0!3m2!1sen!2sus!4v1785916681605!5m2!1sen!2sus" style="width: 100%; height: 100%; border: 0; filter: grayscale(100%) contrast(1.1);" allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+                        </div>
+                        <div style="background: #fff; border: 1px solid #eaeaea; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 25px; color: #111;">Send a Message</h3>
+                            <form onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();" style="display: flex; flex-direction: column; gap: 20px;">
+                                <input type="text" placeholder="Your Name" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'">
+                                <input type="email" placeholder="Your Email" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'">
+                                <textarea placeholder="Your Message" required style="padding: 15px; border: 1px solid #eaeaea; width: 100%; height: 150px; resize: vertical; border-radius: 4px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#111'" onblur="this.style.borderColor='#eaeaea'"></textarea>
+                                <button type="submit" style="background: #111; color: #fff; padding: 18px; border: none; cursor: pointer; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; border-radius: 4px;">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-dashboard" class="view-section reveal" style="display: none;">
+                <div style="padding: 100px 5%; max-width: 800px; margin: 0 auto;">
+                    <div id="db-login-portal" style="padding: 50px; background: #fff; border: 1px solid #eaeaea; max-width: 450px; margin: 0 auto; text-align: center; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.05);">
+                        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 20px;">Client Access</h2>
+                        <form onsubmit="handleClientLoginFake(event);">
+                            <input type="email" placeholder="Email Address" required style="padding: 15px; margin-bottom: 20px; width: 100%; border: 1px solid #eaeaea; border-radius: 4px;">
+                            <input type="password" placeholder="Password" required style="padding: 15px; margin-bottom: 25px; width: 100%; border: 1px solid #eaeaea; border-radius: 4px;">
+                            <button type="submit" style="width: 100%; background: #111; color: #fff; padding: 16px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; border-radius: 4px;">Sign In</button>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="view-dashboard" class="view-section reveal" style="display: none;">
-            <div style="padding: 100px 5%; max-width: 800px; margin: 0 auto;">
-                <div id="db-login-portal" style="padding: 50px; background: #fff; border: 1px solid #eaeaea; max-width: 450px; margin: 0 auto; text-align: center; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.05);">
-                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 20px;">Client Access</h2>
-                    <form onsubmit="handleClientLoginFake(event);">
-                        <input type="email" placeholder="Email Address" required style="padding: 15px; margin-bottom: 20px; width: 100%; border: 1px solid #eaeaea; border-radius: 4px;">
-                        <input type="password" placeholder="Password" required style="padding: 15px; margin-bottom: 25px; width: 100%; border: 1px solid #eaeaea; border-radius: 4px;">
-                        <button type="submit" style="width: 100%; background: #111; color: #fff; padding: 16px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; border-radius: 4px;">Sign In</button>
-                    </form>
-                </div>
-                <div id="db-user-portal" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 20px; margin-bottom: 40px;">
-                        <div>
-                            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5em; margin: 0;">Welcome back</h2>
+                    <div id="db-user-portal" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 20px; margin-bottom: 40px;">
+                            <div>
+                                <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5em; margin: 0;">Welcome back</h2>
+                            </div>
+                            <button onclick="handleClientLogoutFake()" style="background: none; border: 1px solid #ccc; padding: 10px 20px; cursor: pointer; font-weight: 600; border-radius: 4px;">Sign Out</button>
                         </div>
-                        <button onclick="handleClientLogoutFake()" style="background: none; border: 1px solid #ccc; padding: 10px 20px; cursor: pointer; font-weight: 600; border-radius: 4px;">Sign Out</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
     <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping cart">
