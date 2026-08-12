@@ -109,12 +109,12 @@
 <body>
     <!-- CUSTOM MOBILE TOP BAR -->
     <header class="mobile-app-bar">
-        <div class="mobile-app-logo" onclick="navigateTo('view-home')" style="cursor: pointer;">
+        <div class="mobile-app-logo" onclick="navigateTo('view-home', '/')" style="cursor: pointer;">
             <h1>PEHRAMANI</h1>
             <span>Mumbai</span>
         </div>
         <div class="mobile-app-actions">
-            <i class="fa-solid fa-magnifying-glass" onclick="navigateTo('view-shop')"></i>
+            <i class="fa-solid fa-magnifying-glass" onclick="navigateTo('view-shop', '/shop')"></i>
             <div style="position: relative;" onclick="openCart()">
                 <i class="fa-solid fa-bag-shopping"></i>
                 <span id="mobile-cart-badge" style="position: absolute; top: -6px; right: -8px; background: #C59B4E; color: white; font-size: 9px; padding: 1px 5px; border-radius: 50%; font-weight: bold;">0</span>
@@ -131,16 +131,16 @@
     </div>
 
     <header style="position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s ease;">
-        <div class="logo" style="cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="navigateTo('view-home')">
+        <div class="logo" style="cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="navigateTo('view-home', '/')">
             <h1>PEHRAMANI</h1>
             <p>MUMBAI</p>
         </div>
         <nav>
-            <a href="home" onclick="navigateTo('view-home')">Home</a>
-            <a href="shop" onclick="navigateTo('view-shop')">Shop Collection</a>
-            <a href="about" onclick="navigateTo('view-about')">Our Story</a>
-            <a href="contact" onclick="navigateTo('view-contact')">Contact HQs</a>
-            <a href="dashboard" onclick="navigateTo('view-dashboard')" style="display: none; color:#C59B4E; font-weight:700;">Client Hub</a>
+            <a href="/" onclick="event.preventDefault(); navigateTo('view-home', '/')">Home</a>
+            <a href="/shop" onclick="event.preventDefault(); navigateTo('view-shop', '/shop')">Shop Collection</a>
+            <a href="/about" onclick="event.preventDefault(); navigateTo('view-about', '/about')">Our Story</a>
+            <a href="/contact" onclick="event.preventDefault(); navigateTo('view-contact', '/contact')">Contact HQs</a>
+            <a href="/dashboard" onclick="event.preventDefault(); navigateTo('view-dashboard', '/dashboard')" style="display: none; color:#C59B4E; font-weight:700;">Client Hub</a>
         </nav>
         <div class="header-actions">
             <div class="search-bar-container">
@@ -162,7 +162,7 @@
                 <div class="hero-section reveal" style="height: 500px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 0 5% 20px 5%; text-align: center; background: url('https://i.ibb.co/v4Mv8yJG/Gemini-Generated-Image-ae6g2eae6g2eae6g.png') center/cover no-repeat; border-bottom: 1px solid #eaeaea; border-radius: 4px;">
                     <h2 style="font-family: 'Playfair Display', serif; font-size: 3.5em; color: #111; margin-bottom: 5px;">Wear your worth.</h2>
 
-                    <button onclick="navigateTo('view-shop')" style="background: #111; color: #fff; padding: 16px 60px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">
+                    <button onclick="navigateTo('view-shop', '/shop')" style="background: #111; color: #fff; padding: 16px 60px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">
                         Shop The Collection
                     </button>
                 </div>
@@ -172,33 +172,33 @@
                     <h3 style="font-family: 'Playfair Display', serif; font-size: 2em; margin-bottom: 50px;">Shop By Category</h3>
                     <div class="horizontal-scroll-row" style="gap: 40px;">
                         
-                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('earrings', {currentTarget: document.querySelectorAll('.btn-filter')[1]}), 100);">
+                        <a href="/earrings" onclick="event.preventDefault(); navigateTo('view-shop', '/earrings'); setTimeout(()=>filterCategory('earrings', {currentTarget: document.querySelectorAll('.btn-filter')[1]}), 100);" style="text-decoration:none; color:inherit; display:block;">
                             <div class="category-bubble">
                                 <img src="https://i.ibb.co/dsXM7CLY/Modern-Bridal-Pearl-Earrings-with-Sculptural-Design.jpg" style="object-position: center 60%;">
                             </div>
                             <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">EARRINGS</span>
-                        </div>
+                        </a>
                         
-                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('rings', {currentTarget: document.querySelectorAll('.btn-filter')[2]}), 100);">
+                        <a href="/rings" onclick="event.preventDefault(); navigateTo('view-shop', '/rings'); setTimeout(()=>filterCategory('rings', {currentTarget: document.querySelectorAll('.btn-filter')[2]}), 100);" style="text-decoration:none; color:inherit; display:block;">
                             <div class="category-bubble">
                                 <img src="https://i.ibb.co/Df1cLDs7/image.jpg" style="object-position: center center;">
                             </div>
                             <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">RINGS</span>
-                        </div>
+                        </a>
                         
-                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('necklaces', {currentTarget: document.querySelectorAll('.btn-filter')[4]}), 100);">
+                        <a href="/necklaces" onclick="event.preventDefault(); navigateTo('view-shop', '/necklaces'); setTimeout(()=>filterCategory('necklaces', {currentTarget: document.querySelectorAll('.btn-filter')[4]}), 100);" style="text-decoration:none; color:inherit; display:block;">
                             <div class="category-bubble">
                                 <img src="https://i.ibb.co/VcWY2gvm/The-Astraea-Celestial-Gold-Sunburst-Medallion.jpg" style="object-position: center 75%;">
                             </div>
                             <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">NECKLACES</span>
-                        </div>
+                        </a>
                         
-                        <div onclick="navigateTo('view-shop'); setTimeout(()=>filterCategory('bracelets', {currentTarget: document.querySelectorAll('.btn-filter')[3]}), 100);">
+                        <a href="/bracelets" onclick="event.preventDefault(); navigateTo('view-shop', '/bracelets'); setTimeout(()=>filterCategory('bracelets', {currentTarget: document.querySelectorAll('.btn-filter')[3]}), 100);" style="text-decoration:none; color:inherit; display:block;">
                             <div class="category-bubble">
                                 <img src="https://i.ibb.co/s96wk4d4/Chai-ne-Un-mode-le-oversized-Une-pie-ce-unique-Des-mailles-alterne-es-Infos-en-mp-chaine.jpg" style="object-position: center center;">
                             </div>
                             <span style="font-weight:600; font-size:0.9em; letter-spacing:1px; cursor:pointer;">BRACELETS</span>
-                        </div>
+                        </a>
 
                     </div>
                 </div>
@@ -505,7 +505,7 @@
             <button class="checkout-btn" onclick="checkoutWhatsApp()">
                 <i class="fa-brands fa-whatsapp"></i> Checkout on WhatsApp
             </button>
-            <button class="continue-shopping-btn" onclick="closeCart(); navigateTo('view-shop')">Continue Shopping</button>
+            <button class="continue-shopping-btn" onclick="closeCart(); navigateTo('view-shop', '/shop')">Continue Shopping</button>
         </div>
     </aside>
 
@@ -565,7 +565,7 @@
             <div>
                 <h4 class="footer-heading" style="font-family: 'Playfair Display', serif; font-size: 1.2em; font-weight: 600; color: #1C1917; margin-bottom: 22px; text-align: center;">Shop</h4>
                 <ul class="footer-list" id="footer-dynamic-shop-list" style="list-style: none; padding: 0; margin: 0; text-align: center;">
-                    <li><a href="#" onclick="navigateTo('view-shop')" style="color: #6B6560; text-decoration: none; font-size: 0.9em; display: block; margin-bottom: 10px; transition: color 0.2s;">All Collections</a></li>
+                    <li><a href="/shop" onclick="event.preventDefault(); navigateTo('view-shop', '/shop')" style="color: #6B6560; text-decoration: none; font-size: 0.9em; display: block; margin-bottom: 10px; transition: color 0.2s;">All Collections</a></li>
                 </ul>
             </div>
 
@@ -573,12 +573,12 @@
             <div>
                 <h4 class="footer-heading" style="font-family: 'Playfair Display', serif; font-size: 1.2em; font-weight: 600; color: #1C1917; margin-bottom: 22px; text-align: center;">Customer Care</h4>
                 <ul class="footer-list" style="list-style: none; padding: 0; margin: 0; text-align: center;">
-                    <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-about')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">About Us</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-contact')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Contact Us</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-shipping-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Shipping & Handling</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-refund-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Refund Policy</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-tos')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Terms of Service</a></li>
-                    <li style="margin-bottom: 10px;"><a href="#" onclick="navigateTo('view-privacy-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Privacy Policy</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/about" onclick="event.preventDefault(); navigateTo('view-about', '/about')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">About Us</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/contact" onclick="event.preventDefault(); navigateTo('view-contact', '/contact')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Contact Us</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/shipping-policy" onclick="event.preventDefault(); navigateTo('view-shipping-policy', '/shipping-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Shipping & Handling</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/refund-policy" onclick="event.preventDefault(); navigateTo('view-refund-policy', '/refund-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Refund Policy</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/terms" onclick="event.preventDefault(); navigateTo('view-tos', '/terms')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Terms of Service</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/privacy-policy" onclick="event.preventDefault(); navigateTo('view-privacy-policy', '/privacy-policy')" style="color: #6B6560; text-decoration: none; font-size: 0.9em;">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
@@ -591,7 +591,7 @@
 
     <!-- TERMS OF SERVICE PAGE -->
     <div id="view-tos" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
-        <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+        <button onclick="navigateTo('view-home', '/')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Terms of Service</h2>
         <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Pehramani Legal Policies</p>
         <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
@@ -617,7 +617,7 @@
 
     <!-- SHIPPING POLICY PAGE -->
     <div id="view-shipping-policy" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
-        <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+        <button onclick="navigateTo('view-home', '/')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Shipping Policy</h2>
         <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Pehramani Logistics</p>
         <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
@@ -639,7 +639,7 @@
 
     <!-- PRIVACY POLICY PAGE -->
     <div id="view-privacy-policy" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
-        <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+        <button onclick="navigateTo('view-home', '/')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Privacy Policy</h2>
         <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Last updated: June 2026</p>
         <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
@@ -658,7 +658,7 @@
 
     <!-- REFUND POLICY PAGE -->
     <div id="view-refund-policy" class="view-section reveal" style="display: none; padding: 80px 10%; max-width: 900px; margin: 0 auto; line-height: 1.8;">
-        <button onclick="navigateTo('view-home')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+        <button onclick="navigateTo('view-home', '/')" class="pdp-back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 10px; color: #1C1917;">Refund & Return Policy</h2>
         <p style="color: #C59B4E; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Pehramani Quality Guarantee</p>
         <hr style="border:0; border-top:1px solid #E3DDD4; margin-bottom: 30px;">
@@ -841,11 +841,11 @@
     
     <!-- NATIVE APP STYLE BOTTOM NAVIGATION DOCK -->
     <nav class="mobile-bottom-dock">
-        <button class="m-dock-btn active" onclick="navigateTo('view-home'); setMobileActive(this)">
+        <button class="m-dock-btn active" onclick="navigateTo('view-home', '/'); setMobileActive(this)">
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </button>
-        <button class="m-dock-btn" onclick="navigateTo('view-shop'); setMobileActive(this)">
+        <button class="m-dock-btn" onclick="navigateTo('view-shop', '/shop'); setMobileActive(this)">
             <i class="fa-solid fa-gem"></i>
             <span>Shop</span>
         </button>
@@ -853,11 +853,11 @@
             <i class="fa-solid fa-bag-shopping"></i>
             <span>Bag</span>
         </button>
-        <button class="m-dock-btn" onclick="navigateTo('view-about'); setMobileActive(this)">
+        <button class="m-dock-btn" onclick="navigateTo('view-about', '/about'); setMobileActive(this)">
             <i class="fa-solid fa-book-open"></i>
             <span>Story</span>
         </button>
-        <button class="m-dock-btn" onclick="navigateTo('view-contact'); setMobileActive(this)">
+        <button class="m-dock-btn" onclick="navigateTo('view-contact', '/contact'); setMobileActive(this)">
             <i class="fa-solid fa-headset"></i>
             <span>Contact</span>
         </button>
