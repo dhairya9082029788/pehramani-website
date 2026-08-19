@@ -12,11 +12,31 @@ I have preserved 100% of your existing codebase, design systems, animations, pri
     box-sizing: border-box;
 }
 
+.category-bubble {
+    width: 130px;
+    height: 130px;
+    flex-shrink: 0; /* Prevents the row from squishing it into an oval! */
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px auto;
+    border: 1px solid #eaeaea;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.category-bubble:hover {
+    transform: scale(1.1);
+    border-color: #C59B4E;
+    box-shadow: 0 10px 20px rgba(197, 155, 78, 0.2);
+}
+
 .category-bubble img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
+
 
 html {
     scroll-behavior: smooth;
@@ -841,6 +861,20 @@ footer { background-color: #1C1917; text-align: center; padding: 40px 20px; colo
     .about-features-grid { grid-template-columns: 1fr; gap: 20px; }
     .ig-grid { grid-template-columns: repeat(2, 1fr); }
     .pdp-actions { flex-direction: column; }
+    .hero-heading {
+/*            font-size: 2.2em !important;*/
+            margin-bottom: 15px !important; /* Space between the text and the button */
+        }
+
+        .hero-button {
+/*            padding: 12px 30px !important;*/
+/*            font-size: 11px !important;*/
+            margin-bottom: 260px !important; /* <--- THIS PUSHES BOTH THE BUTTON AND TEXT UP! */
+        }
+        
+    .floating-whatsapp-anchor {
+            display: none !important;
+        }
 }
 
 /* AI Stylist Widget Styles (Feature 16) */
@@ -1189,7 +1223,8 @@ footer { background-color: #1C1917; text-align: center; padding: 40px 20px; colo
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     gap: 20px !important;
-    padding-bottom: 15px !important;
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
@@ -1229,11 +1264,29 @@ footer { background-color: #1C1917; text-align: center; padding: 40px 20px; colo
     .horizontal-scroll-row {
         justify-content: flex-start !important; /* Left align on mobile for smooth swiping */
     }
+    
+    /* HORIZONTAL SCROLLING FOR SHOP FILTER BUTTONS ON MOBILE */
+        #dynamic-filter-container {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            justify-content: flex-start !important; /* Starts from the left edge so you can swipe right */
+            padding-bottom: 15px !important;
+            -webkit-overflow-scrolling: touch; /* Smooth swiping on iPhones */
+            scrollbar-width: none; /* Hides scrollbar on Firefox */
+        }
+        
+        #dynamic-filter-container::-webkit-scrollbar {
+            display: none; /* Hides scrollbar on Chrome/Safari */
+        }
+        
+        .btn-filter {
+            flex-shrink: 0 !important; /* Strictly prevents the buttons from getting squished together */
+        }
 
     /* 2. Mobile Hero Layout */
     .hero-section {
-        background-image: url('https://i.ibb.co/xS7WGPZ7/Gemini-Generated-Image-odoqcrodoqcrodoq.png') !important;
-        background-size: cover !important;
+        background-image: url('https://i.ibb.co/SLT2KH8/Gemini-Generated-Image-t59h9dt59h9dt59h.jpg') !important;
+        background-size: cover !imcart-overlayportant;
         background-position: center !important;
         min-height: 85vh !important; /* Makes it tall and immersive on mobile screens */
         padding: 40px 20px !important;
@@ -1366,6 +1419,7 @@ footer { background-color: #1C1917; text-align: center; padding: 40px 20px; colo
         color: #9C948B;
         margin-bottom: 10px;
     }
+    
 }
 
 /* Hide mobile-specific elements when viewing on Desktop */

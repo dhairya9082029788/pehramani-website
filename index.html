@@ -160,9 +160,9 @@
             <div id="view-home" class="view-section active">
 
                 <div class="hero-section reveal" style="height: 500px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 0 5% 20px 5%; text-align: center; background: url('https://i.ibb.co/v4Mv8yJG/Gemini-Generated-Image-ae6g2eae6g2eae6g.png') center/cover no-repeat; border-bottom: 1px solid #eaeaea; border-radius: 4px;">
-                    <h2 style="font-family: 'Playfair Display', serif; font-size: 3.5em; color: #111; margin-bottom: 5px;">Wear your worth.</h2>
-
-                    <button onclick="navigateTo('view-shop', '/shop')" style="background: #111; color: #fff; padding: 16px 60px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">
+                        
+                    <h2 class="hero-heading" style="font-family: 'Playfair Display', serif; font-size: 3.5em; color: #111; margin-bottom: 5px;">Wear your worth.</h2>
+                    <button class="hero-button" onclick="navigateTo('view-shop', '/shop')" style="background: #111; color: #fff; padding: 16px 60px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">
                         Shop The Collection
                     </button>
                 </div>
@@ -546,8 +546,8 @@
                 <!-- Social Media Icons -->
                 <div class="footer-social-icons" style="margin-bottom: 30px;">
                     <a href="https://instagram.com/pehramani___" target="_blank" style="color: #1C1917; font-size: 1.2em; margin-right: 18px; transition: color 0.3s;"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" style="color: #1C1917; font-size: 1.2em; margin-right: 18px; transition: color 0.3s;"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://pin.it/4o6xxy02Y" style="color: #1C1917; font-size: 1.2em; transition: color 0.3s;"><i class="fa-brands fa-pinterest-p"></i></a>
+                    <a href="https://chat.whatsapp.com/H5mTYMF3jBiG5a2jtYfSDx?mode=gi_t" target="_blank" style="color: #1C1917; font-size: 1.2em; margin-right: 18px; transition: color 0.3s;"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://pin.it/4o6xxy02Y" target="_blank" style="color: #1C1917; font-size: 1.2em; transition: color 0.3s;"><i class="fa-brands fa-pinterest-p"></i></a>
                 </div>
 
                 <div style="border-top: 1px solid #E3DDD4; padding-top: 20px;">
@@ -840,28 +840,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <!-- NATIVE APP STYLE BOTTOM NAVIGATION DOCK -->
-    <nav class="mobile-bottom-dock">
-        <button class="m-dock-btn active" onclick="navigateTo('view-home', '/'); setMobileActive(this)">
-            <i class="fa-solid fa-house"></i>
-            <span>Home</span>
-        </button>
-        <button class="m-dock-btn" onclick="navigateTo('view-shop', '/shop'); setMobileActive(this)">
-            <i class="fa-solid fa-gem"></i>
-            <span>Shop</span>
-        </button>
-        <button class="m-dock-btn" onclick="openCart()">
-            <i class="fa-solid fa-bag-shopping"></i>
-            <span>Bag</span>
-        </button>
-        <button class="m-dock-btn" onclick="navigateTo('view-about', '/about'); setMobileActive(this)">
-            <i class="fa-solid fa-book-open"></i>
-            <span>Story</span>
-        </button>
-        <button class="m-dock-btn" onclick="navigateTo('view-contact', '/contact'); setMobileActive(this)">
-            <i class="fa-solid fa-headset"></i>
-            <span>Contact</span>
-        </button>
-    </nav>
+    <!-- NATIVE APP STYLE BOTTOM NAVIGATION DOCK -->
+        <nav class="mobile-bottom-dock">
+            <button class="m-dock-btn active" onclick="closeCart(); navigateTo('view-home', '/'); setMobileActive(this)">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </button>
+            <button class="m-dock-btn" onclick="closeCart(); navigateTo('view-shop', '/shop'); setMobileActive(this)">
+                <i class="fa-solid fa-gem"></i>
+                <span>Shop</span>
+            </button>
+            <button class="m-dock-btn" onclick="openCart()">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>Bag</span>
+            </button>
+            <button class="m-dock-btn" onclick="closeCart(); navigateTo('view-about', '/about'); setMobileActive(this)">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Story</span>
+            </button>
+            <button class="m-dock-btn" onclick="closeCart(); navigateTo('view-contact', '/contact'); setMobileActive(this)">
+                <i class="fa-solid fa-headset"></i>
+                <span>Contact</span>
+            </button>
+        </nav>
 
     <!-- MOBILE SIGN-OFF FOOTER -->
     <div class="mobile-brand-footer" style="display:none;">

@@ -170,13 +170,24 @@ function updateCartCount() {
             0
         );
 
-    const cartCount =
+    // Update Desktop Cart Count
+    const desktopCartCount =
         document.getElementById(
             'cart-count'
         );
 
-    if (cartCount) {
-        cartCount.innerText = count;
+    if (desktopCartCount) {
+        desktopCartCount.innerText = count;
+    }
+
+    // Update Mobile Cart Count
+    const mobileCartCount =
+        document.getElementById(
+            'mobile-cart-badge'
+        );
+
+    if (mobileCartCount) {
+        mobileCartCount.innerText = count;
     }
 }
 
@@ -474,73 +485,120 @@ window.triggerFooterCategoryFilter =
 
 };
 
+window.filterCategory = (selectedCategory) => {
 
-window.selectCategoryButtonAndFilter =
-(categoryName) => {
+    const cleanCategory = String(selectedCategory || 'all').toLowerCase().trim();
 
-    const filterButtons =
-        document.querySelectorAll(
-            '.btn-filter'
-        );
+    // 1. Route the URL
+    const categoryPath = cleanCategory === 'all' ? '/shop' : `/${encodeURIComponent(cleanCategory)}`;
+    if (window.location.pathname !== categoryPath) {
+        window.history.pushState({}, '', categoryPath);
+    }
 
-
-    filterButtons.forEach(
-        btn => {
-
-            const btnText =
-                btn.innerText
-                    .toLowerCase()
-                    .trim();
-
-
-            if (
-                btnText ===
-                categoryName
-                    .toLowerCase()
-                    .trim()
-            ) {
-
-                btn.style.background =
-                    '#111';
-
-                btn.style.color =
-                    '#fff';
-
-                btn.style.borderColor =
-                    '#111';
-
-                btn.classList.add(
-                    'target-filter-active'
-                );
-
-            }
-
-            else {
-
-                btn.style.background =
-                    '#fff';
-
-                btn.style.color =
-                    '#111';
-
-                btn.style.borderColor =
-                    '#eaeaea';
-
-                btn.classList.remove(
-                    'target-filter-active'
-                );
-
-            }
-
+    // 2. Automatically find the right button and turn it Black!
+    const filterButtons = document.querySelectorAll('.btn-filter');
+    filterButtons.forEach(btn => {
+        const btnText = btn.innerText.toLowerCase().trim();
+        
+        // If the button matches the category we want, make it active (black)
+        if (btnText === cleanCategory || (cleanCategory === 'all' && btnText === 'all')) {
+            btn.style.background = '#111';
+            btn.style.color = '#fff';
+            btn.style.borderColor = '#111';
+            btn.classList.add('target-filter-active');
+        } else {
+            // Otherwise, make it inactive (white)
+            btn.style.background = '#fff';
+            btn.style.color = '#111';
+            btn.style.borderColor = '#eaeaea';
+            btn.classList.remove('target-filter-active');
         }
-    );
+    });
 
+    // 3. Filter the actual product cards
+    const productCards = document.querySelectorAll('#shop-catalog-grid .product-card');
+    productCards.forEach(card => {
+        const productCategory = (card.getAttribute('data-category') || '').toLowerCase().trim();
 
-    filterCategory(
-        categoryName
-    );
-
+        if (cleanCategory === 'all' || productCategory === cleanCategory) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 };
+
+// Keep this bridge function so your page router doesn't break
+window.selectCategoryButtonAndFilter = (categoryName) => {
+    window.filterCategory(categoryName);
+};
+
+//window.selectCategoryButtonAndFilter =
+//(categoryName) => {
+//
+//    const filterButtons =
+//        document.querySelectorAll(
+//            '.btn-filter'
+//        );
+//
+//
+//    filterButtons.forEach(
+//        btn => {
+//
+//            const btnText =
+//                btn.innerText
+//                    .toLowerCase()
+//                    .trim();
+//
+//
+//            if (
+//                btnText ===
+//                categoryName
+//                    .toLowerCase()
+//                    .trim()
+//            ) {
+//
+//                btn.style.background =
+//                    '#111';
+//
+//                btn.style.color =
+//                    '#fff';
+//
+//                btn.style.borderColor =
+//                    '#111';
+//
+//                btn.classList.add(
+//                    'target-filter-active'
+//                );
+//
+//            }
+//
+//            else {
+//
+//                btn.style.background =
+//                    '#fff';
+//
+//                btn.style.color =
+//                    '#111';
+//
+//                btn.style.borderColor =
+//                    '#eaeaea';
+//
+//                btn.classList.remove(
+//                    'target-filter-active'
+//                );
+//
+//            }
+//
+//        }
+//    );
+//
+//
+//    filterCategory(
+//        categoryName
+//    );
+//
+//};
 
 
 function renderDynamicCategories(list) {
@@ -647,7 +705,7 @@ function renderDynamicCategories(list) {
                 >
 
                     <div
-                        class="category-bubble"
+                        class="category-bubble blob-shape"
                     >
 
                         <img
@@ -1301,6 +1359,7 @@ function generateProductCardHTML(p) {
                 <div>
 
                     <p
+                        class="product-style-tag"
                         style="
                             font-size:0.75em;
                             color:#888;
@@ -2129,7 +2188,7 @@ function renderCart() {
                 >
 
 
-                    <h4>
+                    <h4 style="padding-right: 25px;">
                         ${escapeHTML(
                             item.name
                         )}
@@ -2183,7 +2242,7 @@ function renderCart() {
 
                     </div>
 
-
+                    <!-- UPDATED CROSS BUTTON FOR MOBILE FRIENDLINESS -->
                     <button
 
                         class="
@@ -2195,9 +2254,18 @@ function renderCart() {
                                 '${item.id}'
                             )
                         "
+                        style="
+                            position: absolute; 
+                            top: 10px; 
+                            right: 0px; 
+                            background: none; 
+                            border: none; 
+                            font-size: 18px; 
+                            color: #9C948B; 
+                            padding: 5px;
+                        "
                     >
-
-                        Remove
+                        <i class="fa-solid fa-xmark"></i>
 
                     </button>
 
@@ -2215,141 +2283,6 @@ function renderCart() {
 // ======================================================
 // 7. ROUTER & FILTERS
 // ======================================================
-
-window.filterCategory =
-(
-    selectedCategory,
-    event
-) => {
-
-
-    // ============================
-    // CLEAN CATEGORY URL
-    // ============================
-
-    const cleanCategory =
-        String(
-            selectedCategory ||
-            'all'
-        )
-        .toLowerCase()
-        .trim();
-
-
-    const categoryPath =
-        cleanCategory === 'all'
-
-            ? '/shop'
-
-            : `/${encodeURIComponent(
-                cleanCategory
-            )}`;
-
-
-    if (
-        window.location.pathname
-        !== categoryPath
-    ) {
-
-        window.history.pushState(
-            {},
-            '',
-            categoryPath
-        );
-
-    }
-
-
-    const filterButtons =
-        document.querySelectorAll(
-            '.btn-filter'
-        );
-
-
-    filterButtons.forEach(
-        btn => {
-
-            btn.style.background =
-                '#fff';
-
-            btn.style.color =
-                '#111';
-
-            btn.style.borderColor =
-                '#eaeaea';
-
-        }
-    );
-
-
-    if (
-        event &&
-        event.currentTarget
-    ) {
-
-        event.currentTarget
-            .style.background =
-            '#111';
-
-        event.currentTarget
-            .style.color =
-            '#fff';
-
-        event.currentTarget
-            .style.borderColor =
-            '#111';
-
-    }
-
-
-    const productCards =
-        document.querySelectorAll(
-            '#shop-catalog-grid .product-card'
-        );
-
-
-    productCards.forEach(
-        card => {
-
-            const productCategory =
-                (
-                    card.getAttribute(
-                        'data-category'
-                    ) ||
-                    ''
-                )
-                .toLowerCase()
-                .trim();
-
-
-            if (
-
-                selectedCategory === 'all' ||
-
-                productCategory ===
-                selectedCategory
-                    .toLowerCase()
-                    .trim()
-
-            ) {
-
-                card.style.display =
-                    'flex';
-
-            }
-
-            else {
-
-                card.style.display =
-                    'none';
-
-            }
-
-        }
-    );
-
-};
-
 
 window.handleNewsletterSubmit =
 async function(e) {
@@ -2590,7 +2523,7 @@ function loadPageFromURL(
 
         setTimeout(
             () =>
-                window.filterCategory(
+                window.filterCategory( // changed from filterCategory
                     'all'
                 ),
             0
